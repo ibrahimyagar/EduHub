@@ -1,0 +1,190 @@
+﻿@{
+    ViewData["Title"] = "Ana Sayfa";
+    Layout = "_Layout2";
+    var bgClasses = new[] { "bg1", "bg2", "bg3", "bg4", "bg5", "bg6" };
+    var renkler = new[] { "#6c2eb7", "#fd5e53", "#38bdf8", "#fbbf24", "#34d399", "#f472b6" };
+    var kategoriRenkler = new[] { "#38bdf8", "#6c2eb7", "#fbbf24", "#fd5e53", "#f472b6", "#34d399" };
+    var aciklamaRenkler = new[] { "#fbbf24", "#38bdf8", "#6c2eb7", "#fd5e53", "#fd5e53", "#fbbf24" };
+    var egitmenRenkler = new[] { "#6c2eb7", "#38bdf8", "#fbbf24", "#fd5e53", "#f472b6", "#34d399" };
+    var ikonlar = new[] { "fa-chalkboard-teacher", "fa-robot", "fa-mobile-alt", "fa-xmark", "fa-paint-brush", "fa-code" };
+    int i = 0;
+}
+@section CSSSection {
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #181028 0%, #6c2eb7 100%) !important;
+            color: #e5e7eb;
+            overflow-x: hidden;
+        }
+
+        .ultra-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 0;
+            background: linear-gradient(135deg, #181028 0%, #6c2eb7 100%) !important;
+            background-size: 200% 200%;
+        }
+
+        .ultra-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: radial-gradient(circle at 80% 10%, #6c2eb733 0%, transparent 60%);
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .ultra-content {
+            position: relative;
+            z-index: 2;
+            min-height: 100vh;
+            padding-bottom: 0;
+            background: none;
+        }
+
+        .ultra-cards-row {
+            margin-bottom: 64px;
+        }
+
+        .ultra-card.bg1, .ultra-card.bg2, .ultra-card.bg3, .ultra-card.bg4, .ultra-card.bg5, .ultra-card.bg6 {
+            background: #181c24 !important;
+        }
+
+        .ultra-card {
+            border-radius: 28px;
+            box-shadow: 0 8px 32px #38bdf822, 0 1.5px 0 #6c2eb7;
+            padding: 36px 28px 28px 28px;
+            min-height: 260px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: flex-start;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 12px;
+            border-bottom: 3px solid #232a36;
+            border-right: 3px solid #232a36;
+            transition: box-shadow 0.3s, transform 0.3s, background 0.3s;
+            color: #e5e7eb;
+            background: #000 !important;
+        }
+
+            .ultra-card:hover {
+                box-shadow: 0 16px 48px #f472b655, 0 1.5px 0 #fbbf24;
+                background: #181c24 !important;
+                transform: translateY(-8px) scale(1.04) rotate(-1deg);
+                border-bottom: 3px solid #fbbf24;
+                border-right: 3px solid #38bdf8;
+            }
+
+        .ultra-card-ikon {
+            font-size: 3.2rem;
+            margin-bottom: 18px;
+            filter: drop-shadow(0 2px 8px #6c2eb722);
+            transition: transform 0.3s;
+        }
+
+        .ultra-card:hover .ultra-card-ikon {
+            transform: scale(1.2) rotate(8deg);
+        }
+
+        .ultra-card-title {
+            font-size: 2.1rem;
+            font-weight: 900;
+            margin-bottom: 12px;
+            letter-spacing: 2px;
+            text-shadow: 0 4px 18px #0008, 0 1px 0 #fff2;
+            font-family: 'Montserrat', 'Segoe UI', Arial, sans-serif;
+            font-style: italic;
+            text-transform: uppercase;
+        }
+
+        .ultra-card-egitmen {
+            display: inline-block;
+            font-size: 1.08rem;
+            font-weight: 800;
+            border-radius: 14px;
+            padding: 5px 18px;
+            margin-bottom: 14px;
+            margin-right: 10px;
+            box-shadow: 0 2px 12px #0004;
+            letter-spacing: 1px;
+            font-family: 'Montserrat', 'Segoe UI', Arial, sans-serif;
+            text-shadow: 0 2px 8px #fff2;
+            font-style: italic;
+            background: #fff;
+            color: #181c24;
+        }
+
+        .ultra-card-desc {
+            font-size: 1.18rem;
+            margin-bottom: 16px;
+            font-weight: 500;
+            min-height: 48px;
+            font-family: 'Segoe UI', Arial, Helvetica, sans-serif;
+            text-shadow: 0 2px 8px #0006;
+            font-style: normal;
+            letter-spacing: 0.2px;
+            line-height: 1.5;
+            color: #f1f5f9 !important;
+        }
+
+        .ultra-topbar {
+            background: rgba(24, 16, 40, 0.7);
+            backdrop-filter: blur(2px);
+            border-radius: 18px;
+            margin-bottom: 36px;
+            margin-top: 12px;
+            padding: 12px 12px 12px 0;
+        }
+    </style>
+}
+
+<div class="ultra-bg"></div>
+<div class="ultra-overlay"></div>
+<div class="container-xl px-0 ultra-content position-relative" style="z-index:2;">
+    <div class="ultra-topbar" id="ultraTopbar" style="z-index:3;">
+        <a href="/Home/JoinClassRoom" class="ultra-btn ultra-btn-outline">Kursa Katıl</a>
+        <a href="/Home/CreateClassRoom" class="ultra-btn ultra-btn-primary">Kurs Oluştur</a>
+    </div>
+    <div class="row g-5 justify-content-center ultra-cards-row">
+        @foreach (var item in Model)
+        {
+            var bgClass = bgClasses[i % bgClasses.Length];
+            var renk = renkler[i % renkler.Length];
+            var kategoriRenk = kategoriRenkler[i % kategoriRenkler.Length];
+            var aciklamaRenk = aciklamaRenkler[i % aciklamaRenkler.Length];
+            var egitmenRenk = egitmenRenkler[i % egitmenRenkler.Length];
+            var ikon = ikonlar[i % ikonlar.Length];
+            <div class="col-12 col-md-6 col-lg-4">
+                <a asp-controller="Classroom" asp-action="Index" asp-route-id="@item.Id" style="text-decoration:none;">
+                    <div class="ultra-card h-100 @bgClass" style="border-top: 6px solid @renk; cursor:pointer;">
+                        <div class="ultra-card-ikon" style="color:@renk;">
+                            <i class="fas @ikon"></i>
+                        </div>
+                        <div class="ultra-card-title" style="color:@renk;">
+                            @item.Name.ToUpperInvariant()
+                        </div>
+                        <div class="ultra-card-egitmen" style="background:@egitmenRenk; color:#fff;">
+                            eğitmen: @item.ApplicationUser.Name @item.ApplicationUser.Surname
+                        </div>
+                        <div class="ultra-card-desc" style="color:@aciklamaRenk;">@item.Description</div>
+                    </div>
+                </a>
+            </div>
+            i++;
+        }
+    </div>
+</div>

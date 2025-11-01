@@ -1,0 +1,639 @@
+﻿@{
+    // Koyu mor (#6c2eb7) ve kart yazıları için farklı canlı renkler
+    var egitimler = new List<dynamic>
+    {
+      new{Baslik="Java ile Full-Stack Web Development", Kategori="Web", BaslikRenk="#6c2eb7", KategoriRenk="#38bdf8", AciklamaRenk="#fbbf24", SureRenk="#fd5e53", Ikon="fa-code", Aciklama="Java ve Spring ile uçtan uca web uygulamaları geliştirme.", Sure="8 ay", Egitmen="İbrahim Yağar", EgitmenPuani=5 },
+        new { Baslik="PHP ile Full-Stack Web Development", Kategori="Web", BaslikRenk="#fd5e53", KategoriRenk="#6c2eb7", AciklamaRenk="#38bdf8", SureRenk="#fbbf24", Ikon="fa-paint-brush", Aciklama="PHP ve MySQL ile sunucu taraflı geliştirme.", Sure="6 ay", Egitmen="İbrahim Yağar", EgitmenPuani=5 },
+        new { Baslik=".NET Core ile Full-Stack Web Development", Kategori="Web", BaslikRenk="#fbbf24", KategoriRenk="#fd5e53", AciklamaRenk="#6c2eb7", SureRenk="#38bdf8", Ikon="fa-html5", Aciklama="ASP.NET Core ile modern full-stack uygulamalar.", Sure="8 ay", Egitmen="İbrahim Yağar", EgitmenPuani=5 },
+        new { Baslik="React Native ile Mobil Uygulama Geliştirme", Kategori="Mobil", BaslikRenk="#38bdf8", KategoriRenk="#fbbf24", AciklamaRenk="#fd5e53", SureRenk="#6c2eb7", Ikon="fa-mobile-alt", Aciklama="React Native ile çapraz platform mobil uygulamalar.", Sure="4 ay", Egitmen="İbrahim Yağar", EgitmenPuani=5 },
+        new { Baslik="Java + React ile Full-Stack Geliştirme", Kategori="Web", BaslikRenk="#f472b6", KategoriRenk="#38bdf8", AciklamaRenk="#6c2eb7", SureRenk="#fbbf24", Ikon="fa-bullhorn", Aciklama="Java ve React teknolojileriyle bütüncül geliştirme.", Sure="8 ay", Egitmen="İbrahim Yağar", EgitmenPuani=5 },
+        new { Baslik="ASP.NET Core + React ile Full-Stack Geliştirme", Kategori="Web", BaslikRenk="#34d399", KategoriRenk="#f472b6", AciklamaRenk="#fd5e53", SureRenk="#6c2eb7", Ikon="fa-python", Aciklama="Backend'de .NET, frontend'de React ile güçlü çözümler.", Sure="7 ay", Egitmen="Nazlıcan Soykan", EgitmenPuani=4 },
+        new { Baslik="Angular + ASP.NET Core ile Full-Stack Geliştirme", Kategori="Web", BaslikRenk="#6c2eb7", KategoriRenk="#fbbf24", AciklamaRenk="#38bdf8", SureRenk="#fd5e53", Ikon="fa-code", Aciklama="Angular ve ASP.NET Core ile dinamik web geliştirme.", Sure="7 ay", Egitmen="Nazlıcan Soykan", EgitmenPuani=4 },
+        new { Baslik="Node.js / Express + React / Redux ile Full-Stack Web Development", Kategori="Web", BaslikRenk="#fd5e53", KategoriRenk="#6c2eb7", AciklamaRenk="#fbbf24", SureRenk="#38bdf8", Ikon="fa-robot", Aciklama="Modern JavaScript stack ile tam kapsamlı geliştirme.", Sure="5 ay (200 saat)", Egitmen="Nazlıcan Soykan", EgitmenPuani=4 },
+        new { Baslik="JavaScript ile Front-End Geliştirme", Kategori="Web", BaslikRenk="#f59e0b", KategoriRenk="#10b981", AciklamaRenk="#3b82f6", SureRenk="#ef4444", Ikon="fa-code", Aciklama="Modern JavaScript, HTML ve CSS ile etkileşimli web arayüzleri.", Sure="6 ay", Egitmen="Yusuf Efe Yağar", EgitmenPuani=3 },
+        new { Baslik="React.js ile Front-End Geliştirme", Kategori="Web", BaslikRenk="#60a5fa", KategoriRenk="#2563eb", AciklamaRenk="#2563eb", SureRenk="#3b82f6", Ikon="fa-react", Aciklama="React kütüphanesiyle dinamik kullanıcı arayüzleri geliştirme.", Sure="5 ay", Egitmen="Yusuf Efe Yağar", EgitmenPuani=3 },
+        new { Baslik="Node.js ile Back-End Geliştirme", Kategori="Web", BaslikRenk="#f97316", KategoriRenk="#ea580c", AciklamaRenk="#c2410c", SureRenk="#dc2626", Ikon="fa-node-js", Aciklama="Node.js ile sunucu tarafı uygulamalar ve API geliştirme.", Sure="6 ay", Egitmen="Furkan Cebe", EgitmenPuani=2 },
+        new { Baslik="Python ile Back-End Geliştirme", Kategori="Web", BaslikRenk="#2563eb", KategoriRenk="#1d4ed8", AciklamaRenk="#1e40af", SureRenk="#1e40af", Ikon="fa-python", Aciklama="Django ve Flask kullanarak web uygulamalarının backend kısmını geliştirme.", Sure="7 ay", Egitmen="İbrahim Yağar", EgitmenPuani=5 },
+        new { Baslik="Kotlin ile Android Mobil Geliştirme", Kategori="Mobil", BaslikRenk="#7c3aed", KategoriRenk="#8b5cf6", AciklamaRenk="#a78bfa", SureRenk="#c084fc", Ikon="fa-android", Aciklama="Kotlin diliyle Android uygulamaları geliştirme.", Sure="6 ay", Egitmen="İbrahim Yağar", EgitmenPuani=5 },
+        new { Baslik="Swift ile iOS Mobil Geliştirme", Kategori="Mobil", BaslikRenk="#ef4444", KategoriRenk="#f87171", AciklamaRenk="#fca5a5", SureRenk="#fecaca", Ikon="fa-apple", Aciklama="Swift dili ve Xcode kullanarak iOS uygulamaları geliştirme.", Sure="6 ay", Egitmen="İbrahim Yağar", EgitmenPuani=5 },
+        new { Baslik="Flutter ile Çapraz Platform Mobil Geliştirme", Kategori="Mobil", BaslikRenk="#0ea5e9", KategoriRenk="#0284c7", AciklamaRenk="#0369a1", SureRenk="#075985", Ikon="fa-mobile-alt", Aciklama="Dart dili ile Android ve iOS için tek kod tabanı üzerinden uygulama geliştirme.", Sure="5 ay", Egitmen="İbrahim Yağar", EgitmenPuani=5 }
+    };
+    }.OrderBy(x => Guid.NewGuid()).Take(15).ToList();
+}
+<!-- Yazılım temalı animasyon: Kod satırı efekti -->
+<div id="intro-animation">
+    <div class="code-animation">
+        <div class="code-line" style="color:#38bdf8;">public class <b style="color:#fbbf24;">EduHub</b> &#123;</div>
+        <div class="code-line" style="color:#fbbf24;">&nbsp;&nbsp;public string Platform = "<span style="color:#6c2eb7;">Geleceğin Eğitim Platformu</span>";</div>
+        <div class="code-line" style="color:#34d399;">&nbsp;&nbsp;public void Başla() =&gt; Console.WriteLine("<span style="color:#fd5e53;">Hoşgeldiniz!</span>");</div>
+        <div class="code-line" style="color:#38bdf8;">&#125;</div>
+        <div class="code-cursor"></div>
+    </div>
+</div>
+
+<!-- Bağımsız sağ üst butonlar -->
+<div class="ultra-authbar">
+    <a href="/Identity/Account/Register" class="ultra-btn ultra-btn-outline">Kayıt Ol</a>
+    <a href="/Identity/Account/Login" class="ultra-btn ultra-btn-primary">Giriş Yap</a>
+    <a href="/Identity/Account/Logout" id="logout-link" style="display:none"></a>
+</div>
+
+<div class="ultra-bg"></div>
+<div class="ultra-overlay"></div>
+<div class="container-xl px-0 ultra-content position-relative" style="z-index:2;">
+
+    <nav class="ultra-navbar d-flex justify-content-between align-items-center py-4 px-4">
+        <div class="d-flex align-items-center gap-3">
+            <a href="/" class="eduhub-brand-link d-flex align-items-center" style="text-decoration:none;">
+                <!-- Basit kod parantezi ikonu -->
+                <span style="
+                    display:inline-flex;
+                    align-items:center;
+                    justify-content:center;
+                    width:44px;
+                    height:44px;
+                    border-radius:12px;
+                    background:linear-gradient(135deg,#6c2eb7 60%,#38bdf8 100%);
+                    margin-right:10px;">
+                    <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+                        <polyline points="18,7 22,14 18,21" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+                        <polyline points="10,7 6,14 10,21" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                </span>
+                <span style="
+                    font-family:'Montserrat','Segoe UI',Arial,sans-serif;
+                    font-weight:900;
+                    font-size:2.2rem;
+                    letter-spacing:2px;
+                    background:linear-gradient(90deg,#6c2eb7 30%,#38bdf8 70%);
+                    -webkit-background-clip:text;
+                    -webkit-text-fill-color:transparent;
+                    background-clip:text;
+                    text-fill-color:transparent;
+                    display:inline-block;">
+                    EDUHUB
+                </span>
+            </a>
+        </div>
+        <div class="d-flex align-items-center gap-4">
+            <a href="#hakkimizda" class="ultra-link">Hakkımızda</a>
+            <a href="#programlar" class="ultra-link">Programlar</a>
+            <a href="#mezunlar" class="ultra-link">Mezunlarımız</a>
+            <a href="#fiyatlar" class="ultra-link">Fiyatlar</a>
+        </div>
+    </nav>
+
+    <header class="ultra-hero text-center mb-5" id="hakkimizda">
+        <h1 class="display-3 fw-bold ultra-gradient-text">Geleceğin Eğitim Platformu</h1>
+        <p class="lead ultra-lead">Öğren, Uygula, Öğret! <span class="ultra-emoji">🌿</span></p>
+    </header>
+
+    <section id="hakkimizda" class="about-eduhub-section position-relative text-center mb-5" style="max-width:800px;margin:auto;">
+        <div style="
+            position:absolute;
+            inset:0;
+            z-index:0;
+            background: url('/images/about-bg.jpg') center/cover no-repeat, linear-gradient(120deg,#181c24cc 60%,#38bdf855 100%);
+            border-radius: 32px;
+            opacity: 0.25;
+            ">
+        </div>
+        <div style="position:relative;z-index:1;padding:2.5rem 2rem;">
+            <h2 class="section-title" style="font-size:2rem;font-weight:800;letter-spacing:1px;color:#6c2eb7;">Hakkımızda</h2>
+            <p class="section-desc" style="font-size:1.18rem;color:#e5e7eb;line-height:1.7;">
+                <b>Eduhub</b> Yazılım ve teknoloji odaklı, topluluk temelli bir eğitim platformuyuz.
+                Canlı dersler, ödevler, etkileşimli kod editörü ve puanlama sistemiyle öğrenmeyi daha etkili ve katılımcı hale getiriyoruz.
+                Sende gel, öğrenirken öğret, bilgiyi paylaşarak geliş!
+        </div>
+    </section>
+
+    <section id="programlar">
+        <div class="row g-5 justify-content-center ultra-cards-row">
+            @{
+                var bgClasses = new[] { "bg1", "bg2", "bg3", "bg4", "bg5", "bg6" };
+                int i = 0;
+            }
+            @foreach (var egitim in egitimler)
+            {
+                var bgClass = bgClasses[i % bgClasses.Length];
+                <div class="col-12 col-md-6 col-lg-4">
+                    <a href="@Url.Action("Detail", "Hello", new { title = egitim.Baslik })" style="text-decoration:none;">
+                        <div class="ultra-card h-100 @bgClass" style="border-top: 6px solid @egitim.BaslikRenk; cursor:pointer;">
+                            <div class="ultra-card-ikon" style="color:@egitim.BaslikRenk;">
+                                <i class="fas @egitim.Ikon"></i>
+                            </div>
+                            <div class="ultra-card-title ultra-fancy-title" style="color:@egitim.BaslikRenk;">@egitim.Baslik</div>
+                            <div class="ultra-card-cat ultra-fancy-cat" style="background:@egitim.KategoriRenk; color:#000;">@egitim.Kategori</div>
+                            <div class="ultra-card-desc ultra-fancy-desc">@egitim.Aciklama</div>
+                            <div class="ultra-card-sure ultra-fancy-sure" style="color:@egitim.SureRenk;"><i class="fas fa-clock"></i> @egitim.Sure</div>
+                        </div>
+                    </a>
+                </div>
+                i++;
+            }
+        </div>
+    </section>
+
+    <section id="mezunlar" class="text-center my-5">
+        <h2 class="section-title">Mezunlarımız</h2>
+        <p class="section-desc">Platformumuzdan mezun olan öğrencilerimiz, sektörde öncü şirketlerde ve projelerde yer alıyor.</p>
+    </section>
+
+    <section id="iletisim" class="text-center my-5">
+        <h2 class="section-title">İletişim</h2>
+        <p class="section-desc">Bize ulaşmak için <a href="mailto:info@eduhub.com" style="color:#6c2eb7;">info@eduhub.com</a> adresine mail atabilirsiniz.</p>
+    </section>
+
+    <footer class="ultra-footer">
+        <div class="container-xl d-flex flex-column flex-md-row justify-content-between align-items-center py-4">
+            <a href="/" class="footer-brand d-flex align-items-center" style="text-decoration:none;">
+                <span style="
+                    display:inline-flex;
+                    align-items:center;
+                    justify-content:center;
+                    width:38px;
+                    height:38px;
+                    border-radius:10px;
+                    background:linear-gradient(135deg,#6c2eb7 60%,#38bdf8 100%);
+                    margin-right:10px;">
+                    <svg width="22" height="22" viewBox="0 0 28 28" fill="none">
+                        <polyline points="16,5 20,14 16,23" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+                        <polyline points="8,5 4,14 8,23" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                </span>
+                <span style="
+                    font-family:'Montserrat','Segoe UI',Arial,sans-serif;
+                    font-weight:900;
+                    font-size:1.5rem;
+                    letter-spacing:1.5px;
+                    background:linear-gradient(90deg,#6c2eb7 30%,#38bdf8 70%);
+                    -webkit-background-clip:text;
+                    -webkit-text-fill-color:transparent;
+                    background-clip:text;
+                    text-fill-color:transparent;
+                    display:inline-block;">
+                    EDUHUB
+                </span>
+            </a>
+            <div class="ultra-footer-links d-flex gap-4 my-3 my-md-0">
+                <a href="#hakkimizda" class="ultra-footer-link">About</a>
+                <a href="#programlar" class="ultra-footer-link">Programs</a>
+                <a href="#mezunlar" class="ultra-footer-link">Alumni</a>
+                <a href="#iletisim" class="ultra-footer-link">Contact</a>
+            </div>
+            <div class="ultra-footer-copy text-end" style="font-size:1rem;">
+                <span style="color:#38bdf8;">&copy; @DateTime.Now.Year Eduhub. All rights reserved.</span>
+            </div>
+        </div>
+    </footer>
+</div>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+    .ultra-authbar {
+        position: fixed;
+        top: 32px;
+        right: 48px;
+        z-index: 1050;
+        display: flex;
+        gap: 12px;
+        min-width: 0;
+    }
+    /* Ekran küçüldükçe JS ile konum ayarlanacak */
+
+    /* Yazılım temalı kod animasyonu */
+    #intro-animation {
+        position: fixed;
+        z-index: 9999;
+        inset: 0;
+        background: #181c24;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 1;
+        visibility: visible;
+        transition: opacity 1s 2.2s, visibility 1s 2.2s;
+    }
+
+        #intro-animation.hide {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+    .code-animation {
+        background: #232a36;
+        border-radius: 18px;
+        box-shadow: 0 8px 32px #6c2eb744;
+        padding: 36px 48px;
+        font-family: 'Consolas', 'Menlo', monospace;
+        font-size: 1.25rem;
+        color: #e5e7eb;
+        min-width: 420px;
+        min-height: 180px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .code-line {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: opacity 0.5s, transform 0.5s;
+        margin-bottom: 4px;
+        white-space: pre;
+    }
+
+        .code-line.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+    .code-cursor {
+        display: inline-block;
+        width: 16px;
+        height: 1.3em;
+        background: #38bdf8;
+        margin-left: 4px;
+        vertical-align: middle;
+        opacity: 0;
+        border-radius: 2px;
+        animation: none;
+    }
+
+        .code-cursor.blink {
+            opacity: 1;
+            animation: code-blink 1s steps(1) infinite;
+        }
+
+    /* Kart renkleri - daha koyu ve sade */
+    .ultra-card.bg1,
+    .ultra-card.bg2,
+    .ultra-card.bg3,
+    .ultra-card.bg4,
+    .ultra-card.bg5,
+    .ultra-card.bg6 {
+        background: #181c24 !important;
+    }
+
+    .ultra-fancy-desc {
+        font-size: 1.18rem;
+        margin-bottom: 16px;
+        font-weight: 500;
+        min-height: 48px;
+        font-family: 'Segoe UI', Arial, Helvetica, sans-serif;
+        text-shadow: 0 2px 8px #0006;
+        font-style: normal;
+        letter-spacing: 0.2px;
+        line-height: 1.5;
+        color: #f1f5f9 !important;
+    }
+
+    html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        min-height: 100vh;
+        background: #000 !important;
+        overflow-x: hidden;
+        color: #e5e7eb;
+    }
+
+    .ultra-bg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100%;
+        min-height: 100vh;
+        z-index: 0;
+        background: #000 !important;
+        background-size: 200% 200%;
+    }
+
+    .ultra-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100%;
+        min-height: 100vh;
+        background: radial-gradient(circle at 80% 10%, #6c2eb733 0%, transparent 60%);
+        z-index: 1;
+        pointer-events: none;
+    }
+
+    .ultra-content {
+        position: relative;
+        z-index: 2;
+        min-height: 100vh;
+        padding-bottom: 0;
+        background: none;
+    }
+
+    .ultra-navbar {
+        background: rgba(10,10,10,0.98);
+        border-radius: 32px;
+        box-shadow: 0 4px 32px #6c2eb722;
+        margin-top: 32px;
+        margin-bottom: 32px;
+        border: 1.5px solid #232a36;
+    }
+
+        .ultra-navbar:hover {
+            box-shadow: 0 8px 48px #38bdf822;
+        }
+
+    .ultra-brand {
+        font-size: 2.3rem;
+        font-weight: 900;
+        color: #6c2eb7;
+        letter-spacing: 1px;
+        text-shadow: 0 2px 12px #6c2eb722;
+        font-family: 'Montserrat', 'Segoe UI', Arial, sans-serif;
+    }
+
+    /* Yeni buton stilleri */
+    .ultra-btn {
+        font-weight: 700;
+        font-size: 1.08rem;
+        padding: 10px 28px;
+        border-radius: 18px;
+        border: 2px solid #6c2eb7;
+        background: transparent;
+        color: #6c2eb7;
+        text-decoration: none;
+        transition: background 0.2s, color 0.2s, border 0.2s, box-shadow 0.2s;
+        box-shadow: 0 2px 8px #6c2eb711;
+        margin-left: 8px;
+        display: inline-block;
+    }
+
+        .ultra-btn:hover, .ultra-btn:focus {
+            background: #6c2eb7;
+            color: #fff;
+            border-color: #38bdf8;
+            box-shadow: 0 4px 16px #38bdf822;
+            text-decoration: none;
+        }
+
+    .ultra-btn-primary {
+        background: #6c2eb7;
+        color: #fff;
+        border-color: #6c2eb7;
+    }
+
+        .ultra-btn-primary:hover, .ultra-btn-primary:focus {
+            background: #38bdf8;
+            color: #181c24;
+            border-color: #38bdf8;
+        }
+
+    .ultra-btn-outline {
+        background: transparent;
+        color: #6c2eb7;
+        border-color: #6c2eb7;
+    }
+
+        .ultra-btn-outline:hover, .ultra-btn-outline:focus {
+            background: #232a36;
+            color: #fff;
+            border-color: #38bdf8;
+        }
+
+    .ultra-link {
+        color: #e5e7eb;
+        font-weight: 600;
+        text-decoration: none;
+        font-size: 1.1rem;
+        padding: 10px 22px;
+        border-radius: 18px;
+        background: linear-gradient(90deg, #232a36 60%, #181c24 100%);
+        border: 1.5px solid #6c2eb7;
+        box-shadow: 0 2px 8px #6c2eb711;
+        transition: color 0.2s, background 0.3s, box-shadow 0.3s, transform 0.3s;
+    }
+
+        .ultra-link:hover {
+            color: #181c24;
+            background: linear-gradient(90deg, #6c2eb7 60%, #38bdf8 100%);
+            box-shadow: 0 4px 16px #6c2eb733;
+            transform: scale(1.08);
+            border-color: #38bdf8;
+        }
+
+    .ultra-hero {
+        margin-top: 32px;
+        margin-bottom: 48px;
+    }
+
+    .ultra-gradient-text {
+        background: linear-gradient(90deg, #6c2eb7 30%, #38bdf8 70%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        text-fill-color: transparent;
+        filter: drop-shadow(0 2px 12px #6c2eb722);
+        letter-spacing: 2px;
+    }
+
+    .ultra-lead {
+        color: #6c2eb7;
+        font-size: 1.3rem;
+        font-weight: 500;
+        margin-bottom: 0;
+    }
+
+    .ultra-emoji {
+        font-size: 1.7rem;
+        vertical-align: middle;
+        filter: drop-shadow(0 2px 8px #6c2eb744);
+    }
+
+    .ultra-cards-row {
+        margin-bottom: 64px;
+    }
+
+    .ultra-card {
+        border-radius: 28px;
+        box-shadow: 0 8px 32px #38bdf822, 0 1.5px 0 #6c2eb7;
+        padding: 36px 28px 28px 28px;
+        min-height: 260px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-start;
+        position: relative;
+        overflow: hidden;
+        margin-bottom: 12px;
+        border-bottom: 3px solid #232a36;
+        border-right: 3px solid #232a36;
+        transition: box-shadow 0.3s, transform 0.3s, background 0.3s;
+        color: #e5e7eb;
+        background: #000 !important;
+    }
+
+        .ultra-card:hover {
+            box-shadow: 0 16px 48px #f472b655, 0 1.5px 0 #fbbf24;
+            background: #181c24 !important;
+            transform: translateY(-8px) scale(1.04) rotate(-1deg);
+            border-bottom: 3px solid #fbbf24;
+            border-right: 3px solid #38bdf8;
+        }
+
+    .ultra-card-ikon {
+        font-size: 3.2rem;
+        margin-bottom: 18px;
+        filter: drop-shadow(0 2px 8px #6c2eb722);
+        transition: transform 0.3s;
+    }
+
+    .ultra-card:hover .ultra-card-ikon {
+        transform: scale(1.2) rotate(8deg);
+    }
+
+    .ultra-fancy-title {
+        font-size: 2.1rem;
+        font-weight: 900;
+        margin-bottom: 12px;
+        letter-spacing: 2px;
+        text-shadow: 0 4px 18px #0008, 0 1px 0 #fff2;
+        font-family: 'Montserrat', 'Segoe UI', Arial, sans-serif;
+        font-style: italic;
+        text-transform: uppercase;
+    }
+
+    .ultra-fancy-cat {
+        display: inline-block;
+        font-size: 1.15rem;
+        font-weight: 800;
+        border-radius: 16px;
+        padding: 5px 20px;
+        margin-bottom: 14px;
+        margin-right: 10px;
+        box-shadow: 0 2px 12px #0004;
+        letter-spacing: 1px;
+        font-family: 'Montserrat', 'Segoe UI', Arial, sans-serif;
+        text-shadow: 0 2px 8px #fff2;
+        font-style: italic;
+    }
+
+    .ultra-fancy-sure {
+        font-size: 1.15rem;
+        font-weight: 700;
+        margin-top: auto;
+        letter-spacing: 1px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-family: 'Montserrat', 'Segoe UI', Arial, sans-serif;
+        text-shadow: 0 2px 8px #0006;
+        font-style: italic;
+    }
+
+    .ultra-footer {
+        background: linear-gradient(90deg, #181c24 60%, #232a36 100%);
+        border-radius: 32px 32px 0 0;
+        box-shadow: 0 -4px 32px #6c2eb722;
+        margin-top: 64px;
+        border-top: 1.5px solid #232a36;
+    }
+
+    .footer-brand:hover span:last-child {
+        filter: brightness(1.2) drop-shadow(0 2px 8px #38bdf855);
+        text-decoration: none;
+    }
+
+    .ultra-footer-link {
+        color: #38bdf8;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 1.08rem;
+        transition: color 0.2s;
+        letter-spacing: 0.5px;
+        padding: 6px 14px;
+        border-radius: 12px;
+    }
+
+        .ultra-footer-link:hover {
+            color: #fff;
+            background: #38bdf8;
+            text-decoration: none;
+        }
+
+    .ultra-footer-copy {
+        font-size: 0.98rem;
+        color: #38bdf8;
+        font-weight: 500;
+    }
+</style>
+<script>
+    // Responsive konumlandırma için media yerine JS kullanımı
+    function updateAuthbarPosition() {
+        var bar = document.querySelector('.ultra-authbar');
+        if (!bar) return;
+        if (window.innerWidth < 600) {
+            bar.style.top = '8px';
+            bar.style.right = '4px';
+            bar.style.gap = '4px';
+        } else if (window.innerWidth < 991) {
+            bar.style.top = '16px';
+            bar.style.right = '12px';
+            bar.style.gap = '6px';
+        } else {
+            bar.style.top = '32px';
+            bar.style.right = '48px';
+            bar.style.gap = '12px';
+        }
+    }
+    window.addEventListener('resize', updateAuthbarPosition);
+
+    // Giriş introsu sadece ilk girişte ve çıkış sonrası tekrar gösterilsin
+    window.addEventListener('DOMContentLoaded', function () {
+        updateAuthbarPosition();
+
+        var intro = document.getElementById('intro-animation');
+        var hasSeenIntro = localStorage.getItem('eduhub_intro_seen');
+
+        if (hasSeenIntro) {
+            if (intro) intro.style.display = 'none';
+            return;
+        }
+
+        // Animasyon gösteriliyor, bir daha gösterilmemesi için işaretle
+        localStorage.setItem('eduhub_intro_seen', '1');
+
+        if (intro) {
+            intro.style.display = 'flex';
+            var lines = document.querySelectorAll('.code-line');
+            var cursor = document.querySelector('.code-cursor');
+            let idx = 0;
+            function showLine() {
+                if (idx < lines.length) {
+                    lines[idx].classList.add('visible');
+                    idx++;
+                    setTimeout(showLine, 400);
+                } else if (cursor) {
+                    cursor.classList.add('blink');
+                    setTimeout(function () {
+                        intro.classList.add('hide');
+                    }, 1200);
+                }
+            }
+            showLine();
+        }
+    });
+
+    // Çıkış yapıldığında intro tekrar gösterilsin
+    document.addEventListener('DOMContentLoaded', function () {
+        // Logout linkini bul (href'te logout geçen)
+        var logoutLink = document.querySelector('a[href*="Logout"], a[href*="logout"]');
+        if (logoutLink) {
+            logoutLink.addEventListener('click', function () {
+                localStorage.removeItem('eduhub_intro_seen');
+            });
+        }
+    });
+</script>

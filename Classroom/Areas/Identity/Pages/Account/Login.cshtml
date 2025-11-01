@@ -1,0 +1,259 @@
+﻿@page
+@model LoginModel
+@{
+    ViewData["Title"] = "Giriş Yap";
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="utf-8" />
+    <title>Giriş Yap - Eduhub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            background: #181c24;
+            min-height: 100vh;
+            margin: 0;
+            font-family: 'Montserrat', 'Segoe UI', Arial, sans-serif;
+            color: #e5e7eb;
+        }
+
+        .auth-logo-bar {
+            position: absolute;
+            top: 32px;
+            left: 48px;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .auth-logo-link {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        .auth-logo-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: linear-gradient(135deg,#6c2eb7 60%,#38bdf8 100%);
+            margin-right: 10px;
+        }
+
+            .auth-logo-icon svg {
+                width: 28px;
+                height: 28px;
+            }
+
+        .auth-logo-text {
+            font-family: 'Montserrat','Segoe UI',Arial,sans-serif;
+            font-weight: 900;
+            font-size: 2rem;
+            letter-spacing: 2px;
+            background: linear-gradient(90deg,#6c2eb7 30%,#38bdf8 70%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-fill-color: transparent;
+            display: inline-block;
+        }
+
+        .auth-container {
+            max-width: 440px;
+            width: 96vw;
+            margin: 100px auto 64px auto;
+            background: #232a36;
+            border-radius: 18px;
+            box-shadow: 0 8px 32px #6c2eb744;
+            overflow: hidden;
+        }
+
+        .auth-header {
+            background: linear-gradient(90deg, #6c2eb7 30%, #38bdf8 70%);
+            color: #fff;
+            font-size: 2.1rem;
+            font-weight: 900;
+            text-align: center;
+            padding: 22px 0 18px 0;
+            letter-spacing: 1px;
+        }
+
+        .auth-body {
+            padding: 32px 28px 24px 28px;
+        }
+
+        .form-label {
+            color: #38bdf8;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .form-control {
+            background: #181c24;
+            color: #e5e7eb;
+            border: 1.5px solid #6c2eb7;
+            border-radius: 12px;
+            margin-bottom: 18px;
+            font-size: 1.08rem;
+            padding: 12px 16px;
+            transition: border 0.2s;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+            .form-control:focus {
+                border-color: #38bdf8;
+                background: #232a36;
+                color: #fff;
+                outline: none;
+            }
+
+        .form-check-label {
+            color: #e5e7eb;
+            font-size: 1rem;
+            margin-left: 4px;
+        }
+
+        .auth-btn {
+            width: 100%;
+            background: #6c2eb7;
+            color: #fff;
+            font-weight: 700;
+            border: none;
+            border-radius: 12px;
+            padding: 12px 0;
+            font-size: 1.1rem;
+            margin-top: 8px;
+            margin-bottom: 8px;
+            transition: background 0.2s;
+            cursor: pointer;
+        }
+
+            .auth-btn:hover {
+                background: #38bdf8;
+                color: #181c24;
+            }
+
+        .auth-link {
+            color: #38bdf8;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+            .auth-link:hover {
+                text-decoration: underline;
+                color: #6c2eb7;
+            }
+
+        .text-danger {
+            color: #fd5e53 !important;
+            font-size: 1rem;
+        }
+
+        .external-login-btn {
+            width: 100%;
+            background: #181c24;
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            padding: 10px 0;
+            font-size: 1rem;
+            margin-bottom: 10px;
+            font-weight: 600;
+            transition: background 0.2s;
+            cursor: pointer;
+        }
+
+            .external-login-btn:hover {
+                background: #6c2eb7;
+                color: #fff;
+            }
+    </style>
+    <script>
+        // Responsive için media query olmadan kutu genişliği ve padding ayarı
+        function adjustAuthContainer() {
+            var c = document.querySelector('.auth-container');
+            var b = document.querySelector('.auth-body');
+            var logo = document.querySelector('.auth-logo-bar');
+            if (!c || !b) return;
+            if (window.innerWidth < 500) {
+                c.style.maxWidth = "99vw";
+                b.style.padding = "16px 6px 12px 6px";
+                if (logo) { logo.style.left = "12px"; logo.style.top = "12px"; }
+                c.style.marginTop = "70px";
+            } else {
+                c.style.maxWidth = "440px";
+                b.style.padding = "32px 28px 24px 28px";
+                if (logo) { logo.style.left = "48px"; logo.style.top = "32px"; }
+                c.style.marginTop = "100px";
+            }
+        }
+        window.addEventListener('resize', adjustAuthContainer);
+        window.addEventListener('DOMContentLoaded', adjustAuthContainer);
+    </script>
+</head>
+<body>
+    <div class="auth-logo-bar">
+        <a href="/" class="auth-logo-link">
+            <span class="auth-logo-icon">
+                <svg viewBox="0 0 28 28" fill="none">
+                    <polyline points="18,7 22,14 18,21" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+                    <polyline points="10,7 6,14 10,21" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+            </span>
+            <span class="auth-logo-text">EDUHUB</span>
+        </a>
+    </div>
+    <div class="auth-container">
+        <div class="auth-header">Giriş Yap</div>
+        <div class="auth-body">
+            <form id="account" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+                <label asp-for="Input.Email" class="form-label">E-posta</label>
+                <input asp-for="Input.Email" class="form-control" autocomplete="username" placeholder="ornek@email.com" />
+                <span asp-validation-for="Input.Email" class="text-danger"></span>
+
+                <label asp-for="Input.Password" class="form-label">Şifre</label>
+                <input asp-for="Input.Password" class="form-control" autocomplete="current-password" type="password" placeholder="Şifre" />
+                <span asp-validation-for="Input.Password" class="text-danger"></span>
+
+                <div class="mb-3 d-flex align-items-center">
+                    <input class="form-check-input" asp-for="Input.RememberMe" style="margin-right:6px;" />
+                    <label class="form-check-label" asp-for="Input.RememberMe" style="margin-bottom:0;">
+                        @Html.DisplayNameFor(m => m.Input.RememberMe)
+                    </label>
+                </div>
+
+                <button id="login-submit" type="submit" class="auth-btn">Giriş Yap</button>
+            </form>
+            <div class="text-center mb-2">
+                <a id="forgot-password" asp-page="./ForgotPassword" class="auth-link">Şifremi Unuttum</a>
+            </div>
+            <div class="text-center mb-2">
+                Hesabınız yok mu? <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl" class="auth-link">Kayıt Olun</a>
+            </div>
+            @if ((Model.ExternalLogins?.Count ?? 0) > 0)
+            {
+                <hr />
+                <div class="text-center mb-2" style="color:#e5e7eb;font-weight:600;">Dış Servis ile Giriş Yapın</div>
+                <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+                    @foreach (var provider in Model.ExternalLogins!)
+                    {
+                        <button type="submit" class="external-login-btn" name="provider" value="@provider.Name" title="@provider.DisplayName hesabınızla giriş yapın">
+                            <i class="fa-brands fa-@provider.Name.ToLower()"></i> @provider.DisplayName ile Giriş Yapın
+                        </button>
+                    }
+                </form>
+            }
+        </div>
+    </div>
+    <partial name="_ValidationScriptsPartial" />
+</body>
+</html>

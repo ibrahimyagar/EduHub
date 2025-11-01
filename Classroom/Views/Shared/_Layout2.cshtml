@@ -1,0 +1,542 @@
+﻿<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    @RenderSection("CSSSection", required: false)
+    <style>
+        :root {
+            --background: #a393fa;
+            --navbar-width: 256px;
+            --navbar-width-min: 80px;
+            --navbar-dark-primary: #23243a;
+            --navbar-dark-secondary: #2c2e47;
+            --navbar-light-primary: #f5f6fa;
+            --navbar-light-secondary: #8392a5;
+            --navbar-accent: #7f6fff;
+        }
+
+        html, body {
+            margin: 0;
+            background: var(--background);
+            height: 100%;
+        }
+
+        body {
+            min-height: 100vh;
+            width: 100vw;
+            overflow-x: hidden;
+        }
+
+        .nav-bar {
+            position: fixed;
+            left: 24px;
+            top: 24px;
+            height: calc(100vh - 48px);
+            background: var(--navbar-dark-primary);
+            border-radius: 18px;
+            display: flex;
+            flex-direction: column;
+            color: var(--navbar-light-primary);
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            overflow: hidden;
+            user-select: none;
+            width: var(--navbar-width);
+            transition: width .2s;
+            z-index: 100;
+            box-shadow: 0 4px 32px 0 rgba(0,0,0,0.10);
+        }
+
+            .nav-bar.closed {
+                width: var(--navbar-width-min);
+            }
+
+        .nav-header {
+            position: relative;
+            width: 100%;
+            min-height: 80px;
+            background: var(--navbar-dark-primary);
+            border-radius: 18px 18px 0 0;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            padding: 0 24px;
+            transition: padding .2s;
+        }
+
+        .nav-bar.closed .nav-header {
+            padding: 0 12px;
+        }
+
+        .nav-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--navbar-light-primary);
+            letter-spacing: 1px;
+            margin-left: 8px;
+            white-space: nowrap;
+            transition: opacity .2s;
+        }
+
+        .nav-bar.closed .nav-title {
+            opacity: 0;
+            width: 0;
+            overflow: hidden;
+        }
+
+        .nav-toggle {
+            background: none;
+            border: none;
+            color: var(--navbar-light-primary);
+            font-size: 1.5rem;
+            margin-right: 8px;
+            cursor: pointer;
+            outline: none;
+            transition: color 0.2s;
+        }
+
+        .nav-content {
+            flex: 1;
+            width: 100%;
+            background: var(--navbar-dark-primary);
+            overflow-x: hidden;
+            padding: 16px 0;
+            position: relative;
+        }
+
+        .nav-button {
+            position: relative;
+            margin-left: 16px;
+            height: 54px;
+            display: flex;
+            align-items: center;
+            color: var(--navbar-light-secondary);
+            cursor: pointer;
+            z-index: 1;
+            font-size: 1.15rem;
+            border-radius: 12px;
+            transition: color .2s, background .2s, padding .2s;
+            padding: 0 16px 0 0;
+            gap: 1rem;
+            text-decoration: none;
+        }
+
+        .nav-bar.closed .nav-button {
+            justify-content: center;
+            padding: 0;
+        }
+
+        .nav-button span {
+            font-size: 1.08rem;
+            font-weight: 500;
+            white-space: nowrap;
+            transition: opacity .2s;
+        }
+
+        .nav-bar.closed .nav-button span {
+            opacity: 0;
+            width: 0;
+            overflow: hidden;
+        }
+
+        .nav-button:hover, .nav-button.active {
+            color: var(--navbar-accent);
+            background: var(--navbar-dark-secondary);
+        }
+
+        .nav-content hr {
+            margin: 12px 0;
+            border: none;
+            border-top: solid 1px var(--navbar-dark-secondary);
+        }
+
+        .nav-content-highlight {
+            position: absolute;
+            left: 0;
+            width: 4px;
+            height: 54px;
+            background: #e74c3c;
+            border-radius: 8px;
+            transition: top .2s;
+            z-index: 2;
+            top: 0;
+        }
+
+        .nav-bar.closed .nav-content-highlight {
+            left: 0;
+        }
+
+        .nav-footer {
+            width: 100%;
+            background: var(--navbar-dark-secondary);
+            border-radius: 0 0 18px 18px;
+            display: flex;
+            flex-direction: column;
+            z-index: 2;
+            transition: height .2s;
+            min-height: 54px;
+        }
+
+        .nav-footer-heading {
+            width: 100%;
+            height: 54px;
+            display: flex;
+            align-items: center;
+            position: relative;
+            padding: 0 16px;
+        }
+
+        .nav-bar.closed .nav-footer-heading {
+            padding: 0 8px;
+        }
+
+        .nav-footer-avatar {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            overflow: hidden;
+            background: #fff;
+            margin-right: 12px;
+            flex-shrink: 0;
+        }
+
+            .nav-footer-avatar img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+
+        .nav-footer-titlebox {
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+            transition: opacity .2s;
+        }
+
+        .nav-bar.closed .nav-footer-titlebox {
+            opacity: 0;
+            width: 0;
+            overflow: hidden;
+        }
+
+        .nav-footer-title {
+            font-weight: 700;
+            color: var(--navbar-light-primary);
+            font-size: 1.08rem;
+            line-height: 1.1;
+            text-decoration: none;
+        }
+
+        .nav-footer-subtitle {
+            color: var(--navbar-light-secondary);
+            font-size: 0.92rem;
+            margin-top: 1px;
+        }
+
+        .nav-footer-arrow {
+            color: var(--navbar-light-secondary);
+            font-size: 1.1rem;
+            margin-left: auto;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .nav-footer.open .nav-footer-arrow {
+            transform: rotate(180deg);
+        }
+
+        .nav-footer-content {
+            display: none;
+            padding: 16px 0 0 0;
+            color: var(--navbar-light-secondary);
+            font-size: 1rem;
+            border-top: solid 1px var(--navbar-light-secondary);
+        }
+
+        .nav-footer.open .nav-footer-content {
+            display: block;
+        }
+
+        .nav-footer-content .footer-link {
+            display: flex;
+            align-items: center;
+            color: var(--navbar-light-primary);
+            font-size: 1.05rem;
+            padding: 10px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: background 0.15s, color 0.15s;
+            gap: 0.7rem;
+            cursor: pointer;
+        }
+
+            .nav-footer-content .footer-link:hover {
+                background: var(--navbar-hover, #3a3b5a);
+                color: var(--navbar-accent);
+            }
+
+            .nav-footer-content .footer-link .fa {
+                width: 20px;
+                text-align: center;
+            }
+
+        .nav-footer-content .logout-form {
+            display: flex;
+            align-items: center;
+            padding: 0;
+            margin: 0;
+            border: none;
+            background: none;
+            width: 100%;
+        }
+
+            .nav-footer-content .logout-form button {
+                display: flex;
+                align-items: center;
+                color: var(--navbar-light-primary);
+                font-size: 1.05rem;
+                padding: 10px 24px;
+                border-radius: 8px;
+                text-decoration: none;
+                background: none;
+                border: none;
+                width: 100%;
+                gap: 0.7rem;
+                cursor: pointer;
+                transition: background 0.15s, color 0.15s;
+            }
+
+                .nav-footer-content .logout-form button:hover {
+                    background: var(--navbar-hover, #3a3b5a);
+                    color: var(--navbar-accent);
+                }
+
+                .nav-footer-content .logout-form button .fa {
+                    width: 20px;
+                    text-align: center;
+                }
+
+        /* HELLO STİLİ BUTONLAR */
+        .ultra-topbar {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 18px;
+            margin-bottom: 36px;
+            margin-top: 12px;
+            padding-right: 12px;
+        }
+            /* Responsive için JS ile ayarlanacak */
+            .ultra-topbar.responsive {
+                flex-direction: column !important;
+                gap: 8px !important;
+                align-items: stretch !important;
+            }
+
+        .ultra-btn {
+            font-weight: 700;
+            font-size: 1.08rem;
+            padding: 10px 28px;
+            border-radius: 18px;
+            border: 2px solid #6c2eb7;
+            background: transparent;
+            color: #6c2eb7;
+            text-decoration: none;
+            transition: background 0.2s, color 0.2s, border 0.2s, box-shadow 0.2s;
+            box-shadow: 0 2px 8px #6c2eb711;
+            margin-left: 8px;
+            display: inline-block;
+        }
+
+            .ultra-btn:hover, .ultra-btn:focus {
+                background: #6c2eb7;
+                color: #fff;
+                border-color: #38bdf8;
+                box-shadow: 0 4px 16px #38bdf822;
+                text-decoration: none;
+            }
+
+        .ultra-btn-primary {
+            background: #6c2eb7;
+            color: #fff;
+            border-color: #6c2eb7;
+        }
+
+            .ultra-btn-primary:hover, .ultra-btn-primary:focus {
+                background: #38bdf8;
+                color: #181c24;
+                border-color: #38bdf8;
+            }
+
+        .ultra-btn-outline {
+            background: transparent;
+            color: #6c2eb7;
+            border-color: #6c2eb7;
+        }
+
+            .ultra-btn-outline:hover, .ultra-btn-outline:focus {
+                background: #232a36;
+                color: #fff;
+                border-color: #38bdf8;
+            }
+        /* Sınıf kartlarının üst boşluğu */
+        .ultra-content {
+            margin-top: 32px;
+        }
+    </style>
+</head>
+<body>
+    <div class="nav-bar closed" id="navBar">
+        <div class="nav-header">
+            <button class="nav-toggle" id="navToggle" aria-label="Menüyü Aç/Kapat">
+                <i class="fa fa-bars"></i>
+            </button>
+            <span class="nav-title" style="display:flex;align-items:center;gap:10px;">
+                <span style="
+                    display:inline-flex;
+                    align-items:center;
+                    justify-content:center;
+                    width:44px;
+                    height:44px;
+                    border-radius:12px;
+                    background:linear-gradient(135deg,#6c2eb7 60%,#38bdf8 100%);
+                    margin-right:8px;">
+                    <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+                        <polyline points="18,7 22,14 18,21" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+                        <polyline points="10,7 6,14 10,21" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                </span>
+                <span style="
+                    font-family:'Montserrat','Segoe UI',Arial,sans-serif;
+                    font-weight:900;
+                    font-size:1.5rem;
+                    letter-spacing:1.5px;
+                    background:linear-gradient(90deg,#6c2eb7 30%,#38bdf8 70%);
+                    -webkit-background-clip:text;
+                    -webkit-text-fill-color:transparent;
+                    background-clip:text;
+                    text-fill-color:transparent;
+                    display:inline-block;">
+                    EDUHUB
+                </span>
+            </span>
+        </div>
+        <div class="nav-content" id="navContent">
+            <a asp-controller="Home" asp-action="Index" class="nav-button active"><i class="fas fa-home"></i> <span>Anasayfa</span></a>
+            <a asp-controller="Home" asp-action="Teacher" class="nav-button"><i class="fas fa-chalkboard-teacher"></i> <span>Öğretilen Kurslar</span></a>
+            <a asp-controller="Home" asp-action="Student" class="nav-button"><i class="fas fa-book"></i> <span>Kayıtlı Kurslar</span></a>
+            <a asp-controller="Home" asp-action="Archived" class="nav-button"><i class="fas fa-archive"></i> <span>Arşivlenmiş Kurslar</span></a>
+            <div class="nav-content-highlight" id="navHighlight"></div>
+        </div>
+        <div class="nav-footer" id="navFooter">
+            <div class="nav-footer-heading" id="navFooterHeading">
+                <div class="nav-footer-avatar">
+                    <img src="~/images/Hesabım.png" alt="Profil" />
+                </div>
+                <div class="nav-footer-titlebox">
+                    <span class="nav-footer-title">Hesabım</span>
+                </div>
+                <span class="nav-footer-arrow" id="navFooterArrow"><i class="fas fa-caret-up"></i></span>
+            </div>
+            <div class="nav-footer-content" id="navFooterContent">
+                <a href="/Identity/Account/Manage" class="footer-link"><i class="fa fa-user"></i> Profilim</a>
+                <a href="/Identity/Account/Logout" class="footer-link">
+                    <i class="fa fa-sign-out-alt"></i> <span>Çıkış Yap</span>
+                </a>
+            </div>
+        </div>
+    </div>
+   
+    <div class="content-wrapper" id="contentWrapper" style="margin-left: 80px; padding: 2.5rem 2rem 2rem 2rem; transition: margin-left 0.2s;">
+        @RenderBody()
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var navBar = document.getElementById('navBar');
+            var navToggle = document.getElementById('navToggle');
+            var content = document.getElementById('contentWrapper');
+            var navButtons = document.querySelectorAll('.nav-button');
+            var navHighlight = document.getElementById('navHighlight');
+            var navFooter = document.getElementById('navFooter');
+            var navFooterHeading = document.getElementById('navFooterHeading');
+            var navFooterContent = document.getElementById('navFooterContent');
+            var ultraTopbar = document.getElementById('ultraTopbar');
+
+            // Sidebar toggle
+            navToggle.addEventListener('click', function (e) {
+                e.stopPropagation();
+                navBar.classList.toggle('closed');
+                if (navBar.classList.contains('closed')) {
+                    content.style.marginLeft = '80px';
+                } else {
+                    content.style.marginLeft = '280px';
+                }
+            });
+
+            // Bar dışına tıklanınca barı kapat
+            document.addEventListener('click', function (e) {
+                // Eğer bar açıksa ve tıklanan yer barın dışında ise kapat
+                if (!navBar.classList.contains('closed') && !navBar.contains(e.target) && e.target !== navToggle) {
+                    navBar.classList.add('closed');
+                    content.style.marginLeft = '80px';
+                }
+            });
+
+            // Barın içinde tıklanan hiçbir şey barı kapatmasın
+            navBar.addEventListener('click', function (e) {
+                e.stopPropagation();
+            });
+
+            // Highlight hareketi
+            navButtons.forEach(function (btn, idx) {
+                btn.addEventListener('mouseenter', function () {
+                    navHighlight.style.top = (btn.offsetTop) + 'px';
+                });
+                btn.addEventListener('mouseleave', function () {
+                    var active = document.querySelector('.nav-button.active');
+                    if (active) navHighlight.style.top = (active.offsetTop) + 'px';
+                });
+                btn.addEventListener('click', function () {
+                    navButtons.forEach(function (b) { b.classList.remove('active'); });
+                    btn.classList.add('active');
+                    navHighlight.style.top = (btn.offsetTop) + 'px';
+                });
+            });
+            // İlk aktif buton için highlight
+            var active = document.querySelector('.nav-button.active');
+            if (active) navHighlight.style.top = (active.offsetTop) + 'px';
+
+            // Footer aç/kapat
+            navFooterHeading.addEventListener('click', function (e) {
+                e.stopPropagation();
+                navFooter.classList.toggle('open');
+            });
+            document.addEventListener('click', function () {
+                navFooter.classList.remove('open');
+            });
+            navFooterContent.addEventListener('click', function (e) {
+                e.stopPropagation();
+            });
+
+            // Responsive ultra-topbar (media yerine JS)
+            function updateUltraTopbar() {
+                if (!ultraTopbar) return;
+                if (window.innerWidth < 600) {
+                    ultraTopbar.classList.add('responsive');
+                } else {
+                    ultraTopbar.classList.remove('responsive');
+                }
+            }
+            updateUltraTopbar();
+            window.addEventListener('resize', updateUltraTopbar);
+        });
+
+        function updateTopNavbar() {
+            // Kaldırıldı, ultra-topbar kullanılıyor
+        }
+    </script>
+</body>
+</html>

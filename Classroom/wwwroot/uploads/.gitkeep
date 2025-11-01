@@ -1,0 +1,3 @@
+# Bu dosya uploads klasörünün git'te kalmasını sağlar
+# Kullanıcı yüklemeleri bu klasöre kaydedilir ancak git'e dahil edilmez
+

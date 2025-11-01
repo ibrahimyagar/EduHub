@@ -1,0 +1,257 @@
+﻿@model Homework
+@using System.Globalization;
+@{
+    Layout = "_Layout2";
+    ViewData["Title"] = "Ödevler";
+}
+
+@section CSSSection {
+    <style>
+        html, body {
+            min-height: 100vh;
+            width: 100%;
+            background: linear-gradient(135deg,#181028 0%, #6c2eb7 100%) !important;
+            color: #e5e7eb;
+            overflow-x: hidden;
+        }
+
+        .classroom-box {
+            width: 100%;
+            background: #23243a;
+            color: #fff;
+            border-radius: 1.5rem;
+            box-shadow: 0 4px 18px rgba(0,0,0,0.18);
+            border: 2px solid #38bdf8;
+            padding: 1.1rem 1.4rem 1.4rem 1.4rem;
+            font-size: 1.13rem;
+            font-weight: 500;
+            margin-bottom: 24px;
+            transition: box-shadow 0.2s, border 0.2s;
+        }
+
+        .classroom-box-title {
+            color: #f7b267;
+            font-size: 1.18rem;
+            font-weight: 700;
+            margin-bottom: 1.1rem;
+            letter-spacing: 0.5px;
+        }
+
+        .classroom-box .form-label {
+            color: #f7b267;
+            font-weight: 600;
+        }
+
+        .score-info {
+            color: #38bdf8;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .deadline-info {
+            color: #b5b8c5;
+            font-size: 1rem;
+        }
+
+        .status-badge {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .table thead th {
+            color: #f7b267;
+            background: #23243a;
+            border-bottom: 2px solid #38bdf8;
+        }
+
+        .table tbody tr {
+            background: #181028;
+            color: #e5e7eb;
+        }
+
+        /* Hover efektini tamamen kaldır */
+        .table-hover tbody tr:hover,
+        .table-hover tbody tr td:hover,
+        .table-hover tbody tr th:hover {
+            background: #181028 !important;
+            color: #e5e7eb !important;
+        }
+
+        .badge.bg-success {
+            background-color: #28a745 !important;
+        }
+
+        .badge.bg-danger {
+            background-color: #dc3545 !important;
+        }
+
+        .modal-content {
+            background: #23243a;
+            color: #fff;
+            border-radius: 1.2rem;
+            border: 2px solid #38bdf8;
+        }
+
+        .modal-header, .modal-footer {
+            border: none;
+        }
+
+        .btn-outline-primary {
+            border-color: #38bdf8 !important;
+            color: #38bdf8 !important;
+            background: transparent !important;
+        }
+
+            .btn-outline-primary:hover {
+                background: #38bdf8 !important;
+                color: #fff !important;
+            }
+
+        .btn-success {
+            background: #28a745 !important;
+            border: none !important;
+        }
+
+        .btn-secondary {
+            background: #6c757d !important;
+            border: none !important;
+        }
+    </style>
+}
+
+<div class="container mt-5">
+    <div class="row align-items-stretch justify-content-center">
+        <div class="col-md-10 d-flex">
+            <div class="classroom-box flex-fill">
+                <div class="classroom-box-title">Ödev Detayı</div>
+                <div style="margin-bottom:1.2rem;">
+                    <div style="font-size:1.15rem; font-weight:600;">@Model.Name</div>
+                    <div style="font-size:1rem; color:#b5b8c5;">
+                        @Model.ApplicationUser.Name @Model.ApplicationUser.Surname &middot;
+                        @(Model.CreatedAt.ToString("yyyy-MM-dd") == DateTime.Now.ToString("yyyy-MM-dd")
+                                                ? Model.CreatedAt.ToString("HH:mm")
+                                                : Model.CreatedAt.ToString("d MMMM", CultureInfo.CreateSpecificCulture("tr-TR")))
+                    </div>
+                    <div class="deadline-info" style="margin-top:0.2rem;">
+                        Son Teslim: @Model.DueDate.ToString("d MMMM", CultureInfo.CreateSpecificCulture("tr-TR")) @Model.DueDate.ToString("HH:mm")
+                    </div>
+                </div>
+                <hr style="border-color:#38bdf8; opacity:0.2;" />
+                <div style="margin-bottom:1.2rem;">
+                    <div style="font-weight:600; color:#f7b267;">Soru</div>
+                    <div>@Model.Description</div>
+                </div>
+                <div class="mb-4">
+                    <h4 class="mb-3" style="color:#38bdf8;">Öğrenci Yanıtları</h4>
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead class="table-light">
+                                <tr>
+                                    <th scope="col">Öğrenci Adı</th>
+                                    <th scope="col">Teslim Tarihi</th>
+                                    <th scope="col">Durum</th>
+                                    <th scope="col">Puan</th>
+                                    <th scope="col">İşlemler</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var answer in ViewBag.WorkList)
+                                {
+                                    <tr>
+                                        <td>@answer.ApplicationUser.Name</td>
+                                        <td>@(answer.CreatedAt == DateTime.MinValue ? "-" : answer.CreatedAt.ToString("dd/MM/yy HH:mm"))</td>
+                                        <td>
+                                            @if (answer.Work == null)
+                                            {
+                                                <span class="badge bg-danger">Teslim Edilmedi</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="badge bg-success">Teslim Edildi</span>
+                                            }
+                                        </td>
+                                        <td>@(answer.Point == -1 ? "-" : answer.Point)</td>
+                                        <td>
+                                            <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#answerModal-@answer.Id" @(answer.Work == null ? "Disabled" : "")>
+                                                Görüntüle ve Puanla
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <div class="modal fade" id="answerModal-@answer.Id" tabindex="-1" aria-labelledby="answerModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="answerModalLabel">
+                                                        @answer.ApplicationUser.Name - Yanıt
+                                                    </h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Kapat"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    @{
+                                                        bool isFile = !string.IsNullOrEmpty(answer.Work) && (
+                                                        answer.Work.EndsWith(".pdf") ||
+                                                        answer.Work.EndsWith(".doc") ||
+                                                        answer.Work.EndsWith(".docx") ||
+                                                        answer.Work.EndsWith(".txt") ||
+                                                        answer.Work.EndsWith(".zip") ||
+                                                        answer.Work.EndsWith(".rar") ||
+                                                        answer.Work.EndsWith(".cs") ||
+                                                        answer.Work.EndsWith(".java") ||
+                                                        answer.Work.EndsWith(".py") ||
+                                                        answer.Work.EndsWith(".js") ||
+                                                        answer.Work.EndsWith(".cpp") ||
+                                                        answer.Work.EndsWith(".c") ||
+                                                        answer.Work.EndsWith(".html") ||
+                                                        answer.Work.EndsWith(".css")
+                                                        );
+                                                    }
+                                                    @if (isFile)
+                                                    {
+                                                        <a href="@answer.Work" target="_blank" class="btn btn-outline-primary mb-3">
+                                                            Dosyayı Görüntüle / İndir
+                                                        </a>
+                                                    }
+                                                    else
+                                                    {
+                                                        <p>@answer.Work</p>
+                                                    }
+                                                    <hr />
+                                                    <form method="post" asp-action="HomeworkGrade" asp-route-ClassRoomId="@Model.ClassRoomId" asp-route-HomeworkId="@Model.Id" asp-route-HomeworkUserId="@answer.Id">
+                                                        <div class="mb-3">
+                                                            <label for="grade-@answer.Id" class="form-label">Puan Gir (0-100)</label>
+                                                            <input type="number" class="form-control" id="grade-@answer.Id" name="Grade" min="0" max="100" value="@answer.Point" required>
+                                                        </div>
+                                                        <button type="submit" class="btn btn-success" id="submitBtn-@answer.Id">Puanı Kaydet</button>
+                                                    </form>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.querySelectorAll('[id^="submitBtn-"]').forEach(function (button) {
+        button.addEventListener('click', function (e) {
+            var inputId = this.id.replace('submitBtn-', 'grade-');
+            var gradeInput = document.getElementById(inputId);
+            if (gradeInput.value < 0 || gradeInput.value > 100 || gradeInput.value === "") {
+                e.preventDefault();
+                alert("Lütfen 0 ile 100 arasında geçerli bir puan giriniz.");
+            }
+        });
+    });
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-bskAUcgyehUtQxjfkEFs0nCMKwvKKNKNsQj8uC8wWj:**"></script>ş

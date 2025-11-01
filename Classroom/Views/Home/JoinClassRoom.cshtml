@@ -1,0 +1,175 @@
+﻿@model JoinClassRoomModel
+@{
+    Layout = "_Layout2";
+    ViewData["Title"] = "Sınıfa Katıl";
+}
+@section CSSSection {
+    <style>
+        body {
+            background: linear-gradient(135deg,#181028 0%, #6c2eb7 100%) !important;
+        }
+
+        .sinif-container {
+            margin: 48px auto;
+            max-width: 600px;
+            border: 2px solid #29b6f6;
+            border-radius: 24px;
+            background: #23253a;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.18);
+            padding: 32px 32px 24px 32px;
+        }
+
+        .sinif-header {
+            color: #ffb74d;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 24px;
+            text-align: left;
+        }
+
+        .class-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #fff;
+            background-color: #43a047;
+            font-size: 1.2rem;
+        }
+
+        .sinif-form-label {
+            color: #fff;
+            font-weight: 500;
+            margin-bottom: 6px;
+        }
+
+        .sinif-form-control {
+            background: #18162a;
+            color: #fff;
+            border: 1.5px solid #29b6f6;
+            border-radius: 8px;
+            padding: 10px 14px;
+            margin-bottom: 16px;
+            width: 100%;
+            font-size: 1rem;
+        }
+
+            .sinif-form-control:focus {
+                outline: none;
+                border-color: #00e5ff;
+                background: #18162a;
+            }
+
+        .sinif-btn {
+            min-width: 120px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1rem;
+            padding: 8px 0;
+            margin-right: 10px;
+            border: 2px solid #29b6f6;
+            background: #23253a;
+            color: #29b6f6;
+            transition: background 0.2s, color 0.2s;
+            text-align: center;
+            display: inline-block;
+            text-decoration: none;
+        }
+
+            .sinif-btn:hover {
+                background: #29b6f6;
+                color: #23253a;
+            }
+
+        .sinif-btn-cancel {
+            background: transparent;
+            color: #fff;
+            border: 2px solid #fff;
+        }
+
+            .sinif-btn-cancel:hover {
+                background: #fff;
+                color: #23253a;
+            }
+
+        .text-danger {
+            color: #ff5252;
+            font-size: 0.95em;
+        }
+
+        .kullanici-bilgi {
+            display: flex;
+            align-items: center;
+            margin-bottom: 18px;
+        }
+
+        .kullanici-ad {
+            color: #fff;
+            margin-left: 12px;
+            font-size: 1.1rem;
+        }
+
+        .bilgi-listesi {
+            color: #bdbdbd;
+            font-size: 0.98rem;
+            margin-bottom: 18px;
+        }
+
+            .bilgi-listesi li {
+                margin-bottom: 4px;
+            }
+    </style>
+}
+
+<div class="sinif-container">
+    <div class="sinif-header">
+        Sınıfa Katıl
+    </div>
+    <div style="color:#bdbdbd; margin-bottom:10px;">
+        Şu anda oturum açtığınız e-posta: <b>@User.Identity?.Name</b>
+    </div>
+    <div class="kullanici-bilgi">
+        <div class="class-avatar">@ViewBag.ApplicationUser.Name[0]</div>
+        <div class="kullanici-ad">@ViewBag.ApplicationUser.Name @ViewBag.ApplicationUser.Surname</div>
+    </div>
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div class="text-danger mb-2">
+            @Html.ValidationSummary(false)
+        </div>
+    }
+    <form method="post" id="joinClassForm">
+        <div class="mb-3 text-start">
+            <label for="sinifKodu" class="sinif-form-label">Sınıf Kodu</label>
+            <input asp-for="ClassRoomUnicCode" type="text" class="sinif-form-control" id="sinifKodu" placeholder="Öğretmeninizden aldığınız sınıf kodunu giriniz">
+            <span asp-validation-for="ClassRoomUnicCode" class="text-danger"></span>
+        </div>
+        <div class="bilgi-listesi">
+            <p>Sınıfa katılmak için:</p>
+            <ul>
+                <li>Geçerli bir hesap kullanın</li>
+                <li>7 harf veya rakamdan oluşan, boşluk veya sembol içermeyen bir sınıf kodu girin</li>
+            </ul>
+        </div>
+        <div style="text-align:right;">
+            <a href="@(Url.Action("Index", "Home"))" class="sinif-btn sinif-btn-cancel">İptal</a>
+            <button type="submit" class="sinif-btn" id="joinButton" disabled>Katıl</button>
+        </div>
+    </form>
+</div>
+
+<script>
+    const sinifKoduInput = document.getElementById('sinifKodu');
+    const joinButton = document.getElementById('joinButton');
+
+    sinifKoduInput.addEventListener('input', () => {
+        if (sinifKoduInput.value.length === 7) {
+            joinButton.disabled = false;
+        } else {
+            joinButton.disabled = true;
+        }
+    });
+</script>

@@ -1,0 +1,776 @@
+﻿@model ClassRoom
+@using System.Globalization;
+@using System.Security.Claims;
+@{
+    Layout = "_Layout2";
+    ViewData["Title"] = Model.Name + " - Classroom";
+    var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+    bool isTeacher = ViewBag.ApplicationUserRole != null && (bool)ViewBag.ApplicationUserRole;
+}
+
+@section CSSSection {
+    <style>
+        html, body {
+            min-height: 100vh;
+            width: 100%;
+            background: linear-gradient(135deg,#181028 0%, #6c2eb7 100%) !important;
+            color: #e5e7eb;
+            overflow-x: hidden;
+        }
+        .classroom-navbar-area {
+            background: #111;
+            border-radius: 2.2rem;
+            margin-bottom: 3.5rem;
+            margin-top: 2.5rem;
+            padding: 1.3rem 4rem;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 2px 24px #23243a22;
+            border: 1px solid #23243a44;
+            gap: 32px;
+            justify-content: flex-start; /* Sola hizala */
+            position: relative;
+            width: 80vw; // Changed from width: 80; to width: 80vw;
+            max-width: 1800px;
+            margin-left: 2.5rem; /* Sola boşluk bırak */
+            margin-right: auto; /* Sağa yaslanmasın */
+        }
+
+        .classroom-navbar-tabs {
+            display: flex;
+            gap: 40px; /* Butonlar arası boşluk artırıldı */
+            justify-content: center; /* İçerikleri ortalar */
+            width: 100%;
+        }
+
+        .classroom-navbar-tab {
+            background: linear-gradient(90deg, #23243a 60%, #23243a 100%);
+            color: #fff;
+            font-weight: 700;
+            font-size: 1.18rem;
+            border: 2px solid #7f6fff;
+            border-radius: 1.5rem;
+            padding: 0.7rem 2.5rem;
+            transition: background 0.2s, color 0.2s, border 0.2s;
+            cursor: pointer;
+            outline: none;
+            box-shadow: 0 2px 12px #6c2eb711;
+            display: flex;
+            align-items: center;
+        }
+
+            .classroom-navbar-tab.active,
+            .classroom-navbar-tab:hover,
+            .classroom-navbar-tab:focus {
+                background: linear-gradient(90deg, #6c2eb7 30%, #38bdf8 100%);
+                color: #fff;
+                border-color: #38bdf8;
+            }
+
+        .class-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+            .tab-content.active {
+                display: block;
+            }
+
+        .list-group-item {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            border: 1px solid #dee2e6;
+            border-radius: 0.5rem;
+            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+            transition: box-shadow 0.3s ease;
+        }
+
+            .list-group-item:hover {
+                box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.15);
+                border-color: #ced4da;
+            }
+
+            .list-group-item i {
+                color: #6c757d;
+            }
+
+            .list-group-item h5 {
+                margin-bottom: 0;
+                font-weight: 600;
+            }
+
+            .list-group-item span {
+                color: #6c757d;
+                font-size: 0.875rem;
+            }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        .main-content-flex {
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+            justify-content: flex-start;
+            width: 100%;
+            margin-top: 32px;
+        }
+
+        .main-announcement-area {
+            flex: 1 1 0;
+            min-width: 0;
+            margin-right: 24px;
+        }
+
+        .classroom-side-panel {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            min-width: 320px;
+            margin-right: 0;
+        }
+
+        /* Ortak kutu stili */
+        .classroom-box {
+            width: 100%;
+            background: #23243a;
+            color: #fff;
+            border-radius: 1.5rem;
+            box-shadow: 0 4px 18px rgba(0,0,0,0.18);
+            border: 2px solid #38bdf8;
+            padding: 1.1rem 1.4rem 1.4rem 1.4rem;
+            font-size: 1.13rem;
+            font-weight: 500;
+            margin-bottom: 24px;
+            transition: box-shadow 0.2s, border 0.2s;
+        }
+
+        .classroom-box-title {
+            color: #f7b267;
+            font-size: 1.18rem;
+            font-weight: 700;
+            margin-bottom: 1.1rem;
+            letter-spacing: 0.5px;
+        }
+
+        .classroom-box .form-control,
+        .classroom-box input,
+        .classroom-box textarea {
+            background: #181028 !important;
+            color: #e5e7eb !important;
+            border: 1px solid #38bdf8 !important;
+        }
+
+        .classroom-box input::placeholder,
+        .classroom-box textarea::placeholder {
+            color: #b5b8c5 !important;
+            opacity: 1 !important;
+            font-weight: 500;
+        }
+
+        .classroom-box h6,
+        .classroom-box .mb-0,
+        .classroom-box .card-title {
+            color: #fff !important;
+            font-weight: 700;
+        }
+
+        .classroom-box small,
+        .classroom-box .text-muted {
+            color: #38bdf8 !important;
+            font-size: 0.98rem;
+            font-weight: 500;
+        }
+
+        .classroom-box p,
+        .classroom-box .card-text,
+        .classroom-box .mb-0 {
+            color: #fff !important;
+            font-size: 1.08rem;
+            font-weight: 500;
+        }
+
+        .classroom-box form .form-control {
+            color: #e5e7eb !important;
+            background: #181028 !important;
+            border: 1px solid #38bdf8 !important;
+        }
+
+        .classroom-box .btn,
+        .classroom-box button {
+            background: #38bdf8 !important;
+            color: #fff !important;
+            border: none !important;
+        }
+
+        .classroom-box .btn-outline-secondary {
+            background: transparent !important;
+            color: #38bdf8 !important;
+            border: 1px solid #38bdf8 !important;
+        }
+
+            .classroom-box .btn-outline-secondary:hover {
+                background: #38bdf8 !important;
+                color: #fff !important;
+            }
+
+        .classroom-box .list-group-item {
+            background: #181028 !important;
+            color: #e5e7eb !important;
+            border: 1px solid #23243a !important;
+        }
+
+        .classroom-box .avatar {
+            background: #23243a !important;
+            color: #38bdf8 !important;
+        }
+
+        .classroom-box .dropdown-menu {
+            background: #23243a !important;
+            color: #fff !important;
+        }
+
+        .classroom-box .dropdown-item {
+            color: #fff !important;
+        }
+
+            .classroom-box .dropdown-item:hover {
+                background: #38bdf8 !important;
+                color: #23243a !important;
+            }
+
+        .classroom-box .side-btn-link {
+            display: inline-block;
+            margin-top: 0.7rem;
+            color: #fff;
+            background: #38bdf8;
+            border-radius: 1rem;
+            padding: 0.3rem 1.1rem;
+            font-size: 0.98rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: background 0.2s, color 0.2s;
+        }
+
+            .classroom-box .side-btn-link:hover {
+                background: #23243a;
+                color: #38bdf8;
+                text-decoration: underline;
+            }
+
+        .classroom-box .side-btn-date {
+            color: #38bdf8;
+            font-size: 0.98rem;
+            margin-top: 0.2rem;
+        }
+
+        .classroom-box .side-btn-value {
+            color: #38bdf8;
+            font-size: 1.18rem;
+            font-weight: 700;
+            margin-left: 6px;
+        }
+
+        .classroom-box .class-info-value {
+            color: #fff;
+            font-size: 1.18rem;
+            font-weight: 700;
+            margin-bottom: 0.2rem;
+        }
+
+        .classroom-box .class-info-dropdown {
+            margin-top: 0.7rem;
+        }
+
+        .classroom-box .dropdown-menu {
+            min-width: 180px;
+        }
+
+        /* Sağ panel kutuları */
+        .classroom-side-btn,
+        .class-info-btn {
+            width: 320px;
+            max-width: 320px;
+            background: #23243a;
+            color: #fff;
+            border-radius: 1.5rem;
+            box-shadow: 0 4px 18px rgba(0,0,0,0.18);
+            border: 2px solid #38bdf8;
+            padding: 1.1rem 1.4rem;
+            font-size: 1.13rem;
+            font-weight: 600;
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 18px;
+            transition: box-shadow 0.2s, border 0.2s;
+        }
+
+            .classroom-side-btn:last-child {
+                margin-bottom: 0;
+            }
+
+        .side-btn-title,
+        .class-info-title {
+            color: #f7b267;
+            font-size: 1.08rem;
+            font-weight: 700;
+            margin-bottom: 0.3rem;
+            letter-spacing: 0.5px;
+        }
+
+        .side-btn-value {
+            color: #38bdf8;
+            font-size: 1.18rem;
+            font-weight: 700;
+            margin-left: 6px;
+        }
+
+        .side-btn-content {
+            color: #fff;
+            font-size: 1.05rem;
+            margin-top: 0.2rem;
+        }
+
+        .side-btn-date {
+            color: #38bdf8;
+            font-size: 0.98rem;
+            margin-top: 0.2rem;
+        }
+
+        .side-btn-link {
+            display: inline-block;
+            margin-top: 0.7rem;
+            color: #fff;
+            background: #38bdf8;
+            border-radius: 1rem;
+            padding: 0.3rem 1.1rem;
+            font-size: 0.98rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: background 0.2s, color 0.2s;
+        }
+
+            .side-btn-link:hover {
+                background: #23243a;
+                color: #38bdf8;
+                text-decoration: underline;
+            }
+
+        /* StackBlitz kod editörü için özel stil */
+        #stackblitz-embed {
+            margin-bottom: 2rem;
+            width: 100%;
+            height: 600px;
+            background: #181028;
+            border-radius: 1.2rem;
+            border: 2px solid #38bdf8;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.33);
+            display: none;
+            overflow: hidden;
+        }
+
+            #stackblitz-embed iframe {
+                width: 100%;
+                height: 100%;
+                border: none;
+                border-radius: 1.2rem;
+            }
+
+        /* Canlı Derse Katıl butonunun arkasındaki beyazlığı kaldırır */
+        #content-meeting .card,
+        #content-meeting .card-body {
+            background: transparent !important;
+            box-shadow: none !important;
+            border: none !important;
+        }
+    </style>
+}
+
+<div class="container mt-4" id="main-content">
+    <div class="classroom-navbar-area" style="margin-top: 0;">
+        <div class="classroom-navbar-tabs">
+            <button class="classroom-navbar-tab active" data-target="content-stream">Akış</button>
+            <button class="classroom-navbar-tab" data-target="content-classwork">Sınıf Çalışmaları</button>
+            <button class="classroom-navbar-tab" data-target="content-people">Kişiler</button>
+            <button class="classroom-navbar-tab" data-target="content-meeting">Canlı Ders</button>
+            <button class="classroom-navbar-tab" data-target="content-rate-teacher">Eğitmeni Değerlendir</button>
+            <button class="classroom-navbar-tab" id="openStackBlitzTab" type="button">Kodlayalım</button>
+        </div>
+    </div>
+
+    <div class="main-content-flex">
+        <div class="main-announcement-area">
+            @if (!Model.IsActive)
+            {
+                <div class="card text-center fs-5 mb-4" style="background-color:#adb5bd">
+                    Ders, Öğretmeniniz tarafından arşivlendi. Herhangi bir ekleme veya düzenleme yapamazsınız.
+                </div>
+            }
+
+            <div class="tab-content active" id="content-stream">
+                <div class="classroom-box">
+                    <div class="classroom-box-title">Sınıfına bir duyuru yap</div>
+                    @if (Model.IsActive)
+                    {
+                        <form asp-action="Announcements" method="post" class="form mb-4">
+                            <div class="input-group">
+                                <input type="hidden" name="classroomId" value="@Model.Id" />
+                                <input name="announcements" type="text" class="form-control" placeholder="Sınıfınıza duyuru yapın" aria-label="Duyuru metni">
+                                <button class="btn btn-outline-secondary" type="submit">Gönder</button>
+                            </div>
+                        </form>
+                    }
+                    @foreach (var item in ViewBag.Announcements)
+                    {
+                        <div class="card mb-3" style="background:transparent; border:none; box-shadow:none;">
+                            <div class="card-body" style="padding:0;">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <div class="d-flex align-items-center">
+                                        <div class="class-avatar" style="background-color: #00008B;">@item.ApplicationUser.Name[0]</div>
+                                        <h6 class="mb-0 ms-2">@item.ApplicationUser.Name @item.ApplicationUser.Surname</h6>
+                                        <small class="text-muted ms-2">@(item.CreatedAt.ToString("yyyy-MM-dd") == DateTime.Now.ToString("yyyy-MM-dd") ? item.CreatedAt.ToString("HH:mm") : item.CreatedAt.ToString("dMMMM", CultureInfo.CreateSpecificCulture("en-US")))</small>
+                                    </div>
+                                    @if ((ViewBag.ApplicationUserRole || item.ApplicationUser.Id == ViewBag.ApplicationUser) && Model.IsActive)
+                                    {
+                                        <div class="dropdown">
+                                            <button class="btn btn-link" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                                <i class="fas fa-ellipsis-v"></i>
+                                            </button>
+                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                <li><a asp-action="DeleteAnnonucements" asp-route-classroomId="@Model.Id" asp-route-announcementsId="@item.Id" class="dropdown-item">Sil</a></li>
+                                            </ul>
+                                        </div>
+                                    }
+                                </div>
+                                <p style="color:#e5e7eb;">@item.Contents</p>
+                                <hr style="border-color:#38bdf8; opacity:0.2;" />
+                                @{
+                                    bool hasComments = false;
+                                }
+                                @foreach (var comment in ViewBag.Comments)
+                                {
+                                    if (comment.Announcements.Id == item.Id)
+                                    {
+                                        hasComments = true;
+                                        <div class="d-flex align-items-start mb-3">
+                                            <div class="class-avatar" style="background-color: #6c757d; width: 35px; height: 35px;">@comment.ApplicationUser.Name[0]</div>
+                                            <div class="ms-3">
+                                                <div class="d-flex justify-content-between">
+                                                    <h6 class="mb-0">@comment.ApplicationUser.Name @comment.ApplicationUser.Surname</h6>
+                                                    <small class="text-muted ms-2">@(comment.CreatedAt.ToString("yyyy-MM-dd") == DateTime.Now.ToString("yyyy-MM-dd") ? comment.CreatedAt.ToString("HH:mm") : comment.CreatedAt.ToString("dMMMM", CultureInfo.CreateSpecificCulture("en-US")))</small>
+                                                </div>
+                                                <p class="mb-0">@comment.Description</p>
+                                            </div>
+                                            @if ((ViewBag.ApplicationUserRole || item.ApplicationUser.Id == ViewBag.ApplicationUser || comment.ApplicationUserId == ViewBag.ApplicationUser) && Model.IsActive)
+                                            {
+                                                <div style="margin-left:auto; margin-right: 0;">
+                                                    <button class="btn btn-link" type="button">
+                                                        <a asp-controller="Comment" asp-action="RemoveComment" asp-route-classroomId="@Model.Id" asp-route-AnnouncementId="@item.Id" asp-route-CommentId="@comment.Id" class="dropdown-item"><i class="fa-solid fa-xmark"></i></a>
+                                                    </button>
+                                                </div>
+                                            }
+                                        </div>
+                                    }
+                                }
+                                @if (hasComments)
+                                {
+                                    <hr style="border-color:#38bdf8; opacity:0.2;" />
+                                }
+
+                                @if (Model.IsActive)
+                                {
+                                    <form asp-controller="Comment" asp-action="AddComment" asp-route-AnnouncementId="@item.Id" asp-route-ClassroomId="@Model.Id" class="form" method="post">
+                                        <div class="d-flex align-items-center mt-3">
+                                            <input name="description" type="text" class="form-control" placeholder="Sınıfa yorum ekle...">
+                                            <button type="submit" class="btn btn-link"><i class="fas fa-paper-plane"></i></button>
+                                        </div>
+                                    </form>
+                                }
+                            </div>
+                        </div>
+                    }
+                    <div class="mt-4" style="opacity:0.5;">
+                        <div style="font-size:1.3rem; font-weight:700;">Burası sınıfınızla konuşabileceğiniz yerdir</div>
+                        <div style="font-size:1.1rem;">Duyuru paylaşmak, ödev yayınlamak ve öğrenci sorularına yanıt vermek için akışı kullanın</div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-content" id="content-classwork">
+                <div class="classroom-box">
+                    <div class="classroom-box-title">Sınıf Çalışmaları</div>
+                    @if (ViewBag.ApplicationUserRole && Model.IsActive)
+                    {
+                        <a asp-controller="Homework" asp-action="CreateHomework" asp-route-id="@Model.Id" class="btn btn-outline-secondary btn-lg mb-3" style="width:max-content;">
+                            <i class="fa-solid fa-plus"></i> Oluştur
+                        </a>
+                    }
+                    @if (ViewBag.Homeworks.Count != 0)
+                    {
+                        <ul class="list-unstyled" style="margin:0; padding:0;">
+                            @foreach (var item in ViewBag.Homeworks)
+                            {
+                                <a asp-controller="Homework" asp-action="@(ViewBag.ApplicationUserRole ? "HomeworkList" : "Index")" asp-route-ClassroomId="@Model.Id" asp-route-HomeworkId="@item.Id" style="text-decoration: none;">
+                                    <li class="classroom-homework-item d-flex align-items-center" style="background:#181028; border:1px solid #23243a; border-radius:1rem; margin-bottom:16px; padding:1.1rem 1.5rem; box-shadow:0 2px 12px #23243a22;">
+                                        <i class="fa-solid fa-pen" style="color:#38bdf8; font-size:1.3rem; margin-right:18px;"></i>
+                                        <span style="color:#fff; font-size:1.15rem; font-weight:600;">@item.Name</span>
+                                        <span style="margin-left:auto; color:#38bdf8; font-size:1.05rem; font-weight:500;">
+                                            Son Teslim: @item.DueDate.ToString("d MMMM HH:mm", CultureInfo.CreateSpecificCulture("tr-TR"))
+                                        </span>
+                                    </li>
+                                </a>
+                            }
+                        </ul>
+                    }
+                    else
+                    {
+                        <div style="color:#b5b8c5; font-size:1.15rem; font-weight:600; margin-top:1.5rem;">
+                            Bu sınıfın henüz herhangi bir sınıf çalışması yok.
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="tab-content" id="content-people">
+                <div class="classroom-box">
+                    <div class="classroom-box-title">Eğitmenler</div>
+                    <ul class="list-unstyled" style="margin:0; padding:0;">
+                        @foreach (var item in ViewBag.Teachers)
+                        {
+                            <li class="d-flex align-items-center" style="background:#181028; border:1px solid #23243a; border-radius:1rem; margin-bottom:16px; padding:1.1rem 1.5rem; box-shadow:0 2px 12px #23243a22;">
+                                <div class="avatar" style="background:#198754; color:#fff; margin-right:18px;">@item.Name[0]</div>
+                                <span style="color:#fff; font-size:1.12rem; font-weight:600;">@item.Name @item.Surname</span>
+                            </li>
+                        }
+                    </ul>
+                    <div class="classroom-box-title" style="margin-top:2.2rem;">Sınıf Arkadaşları <span style="color:#38bdf8; font-size:1.08rem; font-weight:600;">(@ViewBag.Students.Count öğrenci)</span></div>
+                    <ul class="list-unstyled" style="margin:0; padding:0;">
+                        @foreach (var item in ViewBag.Students)
+                        {
+                            <li class="d-flex align-items-center" style="background:#181028; border:1px solid #23243a; border-radius:1rem; margin-bottom:16px; padding:1.1rem 1.5rem; box-shadow:0 2px 12px #23243a22;">
+                                <div class="avatar" style="background:#dc3545; color:#fff; margin-right:18px;">@item.Name[0]</div>
+                                <span style="color:#fff; font-size:1.12rem; font-weight:600;">@item.Name @item.Surname</span>
+                                @if (ViewBag.ApplicationUserRole && Model.IsActive)
+                                {
+                                    <div class="dropdown" style="margin-left:auto;">
+                                        <button class="btn btn-link" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                            <i class="fas fa-ellipsis-v"></i>
+                                        </button>
+                                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
+                                            <li><a asp-action="MakeTeacher" asp-route-userId="@item.Id" asp-route-classroomId="@Model.Id" class="dropdown-item">Eğitmen yap</a></li>
+                                            <li><a asp-action="RemoveStudent" asp-route-userId="@item.Id" asp-route-classroomId="@Model.Id" class="dropdown-item">Kaldır</a></li>
+                                        </ul>
+                                    </div>
+                                }
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+            <div class="tab-content" id="content-meeting">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <div id="jitsi-join-area" style="text-align:center; padding:2rem;">
+                            <button id="join-jitsi-btn" class="btn btn-success btn-lg">
+                                <i class="fa fa-video"></i> Canlı Derse Katıl
+                            </button>
+                        </div>
+                        <div id="jitsi-container" style="height: 700px; width: 100%; display:none;"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-content" id="content-rate-teacher">
+                <div class="classroom-box">
+                    <div class="classroom-box-title">Eğitmeni Değerlendir</div>
+                    <ul class="list-unstyled" style="margin:0; padding:0;">
+                        @foreach (var teacher in ViewBag.Teachers)
+                        {
+                            <li class="d-flex flex-column flex-md-row align-items-start align-items-md-center" style="background:#181028; border:1px solid #23243a; border-radius:1rem; margin-bottom:16px; padding:1.1rem 1.5rem; box-shadow:0 2px 12px #23243a22;">
+                                <div class="avatar" style="background:#198754; color:#fff; margin-right:18px; min-width:40px;">@teacher.Name[0]</div>
+                                <div style="flex:1;">
+                                    <div style="color:#fff; font-size:1.12rem; font-weight:600;">@teacher.Name @teacher.Surname</div>
+                                    <div style="color:#38bdf8; font-size:1.05rem; font-weight:500; margin-top:0.2rem;">
+                                        Ortalama Puan: @{
+                                            var ratingInfo = ViewBag.TeacherRatings != null && ViewBag.TeacherRatings.ContainsKey(teacher.Id)
+                                                ? ViewBag.TeacherRatings[teacher.Id]
+                                                : null;
+                                            @((ratingInfo != null) ? ((double)ratingInfo.Average).ToString("0.0") : "-")
+                                        }
+                                    </div>
+                                    @if (!isTeacher && teacher.Id != userId)
+                                    {
+                                        <form asp-action="RateTeacher" asp-controller="Classroom" method="post" class="mt-2 w-100">
+                                            <input type="hidden" name="classroomId" value="@Model.Id" />
+                                            <input type="hidden" name="teacherId" value="@teacher.Id" />
+                                            <div class="d-flex align-items-center flex-wrap" style="gap:8px;">
+                                                <label class="me-2" style="color:#b5b8c5;">Puan:</label>
+                                                <select name="rating" class="form-select form-select-sm me-2" style="width: auto; min-width:60px;">
+                                                    <option value="1">1</option>
+                                                    <option value="2">2</option>
+                                                    <option value="3">3</option>
+                                                    <option value="4">4</option>
+                                                    <option value="5">5</option>
+                                                </select>
+                                                <input name="comment" class="form-control form-control-sm me-2" style="width: 250px;" placeholder="Yorumunuz" maxlength="250" />
+                                                <button type="submit" class="btn btn-sm btn-outline-secondary">Gönder</button>
+                                            </div>
+                                        </form>
+                                    }
+                                    @if (ratingInfo != null && ratingInfo.Comments.Count > 0)
+                                    {
+                                        <div class="mt-2">
+                                            <strong style="color:#f7b267;">Yorumlar:</strong>
+                                            <ul class="list-unstyled mb-0">
+                                                @foreach (var c in ratingInfo.Comments)
+                                                {
+                                                    <li class="mb-2" style="color:#e5e7eb;">
+                                                        <span class="fw-bold">@c.StudentName @c.StudentSurname</span>
+                                                        <span class="badge" style="background-color: #ffc107; color: #212529; margin-left: 8px;">Puan: @c.Rating</span>
+                                                        <div style="margin-left:2px;">@c.Comment</div>
+                                                    </li>
+                                                }
+                                            </ul>
+                                        </div>
+                                    }
+                                </div>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="classroom-side-panel">
+            <div class="classroom-side-btn mb-2">
+                <span class="side-btn-title">Yaklaşan Çalışmalar</span>
+                <div class="side-btn-content">
+                    @if (ViewBag.NearestHomework != null)
+                    {
+                        <div>@ViewBag.NearestHomework.Name</div>
+                        <div class="side-btn-date">@ViewBag.NearestHomework.DueDate.ToString("dMMMM", CultureInfo.CreateSpecificCulture("en-US")) @ViewBag.NearestHomework.DueDate.ToString("HH:mm")</div>
+                    }
+                    else
+                    {
+                        <div>Yaklaşan Çalışma yok</div>
+                    }
+                    <a id="viewAllButton" class="side-btn-link">Tümünü Görüntüle</a>
+                </div>
+            </div>
+            <div class="classroom-side-btn mb-2">
+                <span class="side-btn-title">Sınıf Kodu:</span>
+                <span class="side-btn-value">@Model.UnicCode</span>
+            </div>
+            <div class="class-info-btn">
+                <span class="class-info-title">Sınıf Bilgileri</span>
+                <span class="class-info-value">@Model.Name</span>
+                <div class="class-info-dropdown dropdown">
+                    <button class="btn btn-sm btn-light dropdown-toggle" type="button" id="classInfoDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        İşlemler
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="classInfoDropdown">
+                        @if (ViewBag.ApplicationUserRole && Model.IsActive)
+                        {
+                            <li><a class="dropdown-item" asp-action="ArchivedClassroom" asp-route-id="@Model.Id">Arşivle</a></li>
+                            <li><a class="dropdown-item text-danger" asp-action="DeleteClassroom" asp-route-id="@Model.Id">Sil</a></li>
+                        }
+                        else if (ViewBag.ApplicationUserRole && !Model.IsActive)
+                        {
+                            <li><a class="dropdown-item" asp-action="UnarchivedClassroom" asp-route-id="@Model.Id">Arşivden çıkart</a></li>
+                            <li><a class="dropdown-item text-danger" asp-action="DeleteClassroom" asp-route-id="@Model.Id">Sil</a></li>
+                        }
+                        @if (Model.ApplicationUser.Id != ViewBag.ApplicationUser && Model.IsActive)
+                        {
+                            <li><a class="dropdown-item text-danger" asp-action="UnenrollClassroom" asp-route-id="@Model.Id">Kaydı sil</a></li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="stackblitz-embed" style="height:500px;width:100%;border:1px solid #ccc;margin-top:2rem; display:none;"></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://meet.jit.si/external_api.js"></script>
+
+<script>
+    // Sekme değiştirme işlevselliği (yeni bar için)
+    document.querySelectorAll('.classroom-navbar-tabs .classroom-navbar-tab').forEach(btn => {
+        btn.addEventListener('click', function () {
+            if (this.id !== "openStackBlitzTab") {
+                document.querySelectorAll('.classroom-navbar-tabs .classroom-navbar-tab').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                document.querySelectorAll('.tab-content').forEach(content => {
+                    content.classList.remove('active');
+                });
+                const targetId = this.getAttribute('data-target');
+                const target = document.getElementById(targetId);
+                if (target) target.classList.add('active');
+                document.getElementById('stackblitz-embed').style.display = 'none';
+            }
+        });
+    });
+
+    // Kodlayalım butonu için
+    document.getElementById('openStackBlitzTab').addEventListener('click', function () {
+        document.querySelectorAll('.classroom-navbar-tabs .classroom-navbar-tab').forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        document.querySelectorAll('.tab-content').forEach(content => {
+            content.classList.remove('active');
+        });
+        var embedDiv = document.getElementById('stackblitz-embed');
+        embedDiv.innerHTML = '<iframe src="https://stackblitz.com/edit/web-platform?embed=1&file=index.html" style="width:100%;height:100%;border:none;border-radius:8px;"></iframe>';
+        embedDiv.style.display = 'block';
+        window.scrollTo({ top: embedDiv.offsetTop - 100, behavior: 'smooth' });
+    });
+
+    // "Tümünü Görüntüle" butonu
+    const viewAllButton = document.getElementById('viewAllButton');
+    if (viewAllButton) {
+        viewAllButton.addEventListener('click', function () {
+            const classworkTab = document.querySelector('.classroom-navbar-tab[data-target="content-classwork"]');
+            if (classworkTab) {
+                classworkTab.click();
+            }
+        });
+    }
+
+    // Jitsi Meet entegrasyonu için JS kodu
+    let jitsiApi = null;
+    document.getElementById('join-jitsi-btn').addEventListener('click', function () {
+        document.getElementById('jitsi-join-area').style.display = 'none';
+        const jitsiContainer = document.getElementById('jitsi-container');
+        jitsiContainer.style.display = 'block';
+        const domain = "meet.jit.si";
+        const options = {
+            roomName: "SinifOdasi_@Model.Id",
+            width: "100%",
+            height: 700,
+            parentNode: jitsiContainer,
+            interfaceConfigOverwrite: {}
+        };
+        jitsiApi = new JitsiMeetExternalAPI(domain, options);
+        jitsiApi.addEventListener('readyToClose', function () {
+            jitsiApi.dispose();
+            jitsiContainer.style.display = 'none';
+            document.getElementById('jitsi-join-area').style.display = 'block';
+        });
+    });
+</script>

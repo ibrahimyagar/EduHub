@@ -1,0 +1,111 @@
+﻿@model ClassRoom
+@{
+    Layout = "_Layout2";
+    ViewData["Title"] = "Sınıf Oluştur";
+}
+
+@section CSSSection {
+    <style>
+        body {
+            background: linear-gradient(135deg,#181028 0%, #6c2eb7 100%) !important;
+        }
+
+        .sinif-container {
+            margin: 48px auto;
+            max-width: 600px;
+            border: 2px solid #29b6f6;
+            border-radius: 24px;
+            background: #23253a;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.18);
+            padding: 32px 32px 24px 32px;
+        }
+
+        .sinif-header {
+            color: #ffb74d;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 24px;
+            text-align: left;
+        }
+
+        .sinif-form-label {
+            color: #fff;
+            font-weight: 500;
+            margin-bottom: 6px;
+        }
+
+        .sinif-form-control {
+            background: #18162a;
+            color: #fff;
+            border: 1.5px solid #29b6f6;
+            border-radius: 8px;
+            padding: 10px 14px;
+            margin-bottom: 16px;
+            width: 100%;
+            font-size: 1rem;
+        }
+
+            .sinif-form-control:focus {
+                outline: none;
+                border-color: #00e5ff;
+                background: #18162a;
+            }
+
+        .sinif-btn {
+            min-width: 120px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1rem;
+            padding: 8px 0;
+            margin-right: 10px;
+            border: 2px solid #29b6f6;
+            background: #23253a;
+            color: #29b6f6;
+            transition: background 0.2s, color 0.2s;
+            text-align: center;
+            display: inline-block;
+            text-decoration: none;
+        }
+
+            .sinif-btn:hover {
+                background: #29b6f6;
+                color: #23253a;
+            }
+
+        .sinif-btn-cancel {
+            background: transparent;
+            color: #fff;
+            border: 2px solid #fff;
+        }
+
+            .sinif-btn-cancel:hover {
+                background: #fff;
+                color: #23253a;
+            }
+
+        .text-danger {
+            color: #ff5252;
+            font-size: 0.95em;
+        }
+    </style>
+}
+
+<div class="sinif-container">
+    <div class="sinif-header">
+        Sınıf Oluştur
+    </div>
+    <form method="post">
+        <div class="mb-3 text-start">
+            <label class="sinif-form-label" asp-for="Name">Sınıf Adı</label>
+            <input class="sinif-form-control" asp-for="Name" id="className" placeholder="Sınıf adını giriniz">
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <div class="mb-3 text-start">
+            <label class="sinif-form-label" asp-for="Description">Açıklama</label>
+            <input class="sinif-form-control" asp-for="Description" id="classDescription" placeholder="Sınıf açıklamasını giriniz">
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+        <button type="submit" class="sinif-btn">Oluştur</button>
+        <a href="@(Url.Action("Index", "Home"))" class="sinif-btn sinif-btn-cancel">İptal</a>
+    </form>
+</div>
