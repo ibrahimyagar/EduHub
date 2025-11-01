@@ -23,14 +23,14 @@ EduHub, ASP.NET Core MVC 8.0 tabanlı modern bir sınıf yönetim sistemidir. Ö
 #### 📚 Kurs Detay Sayfası
 ![Kurs Detay](docs/screenshots/CourseDetail.png)
 
-#### 👥 Sınıf Detay Sayfası
-![Sınıf Detay](docs/screenshots/ClassDetail.png)
+#### 💳 Ödeme Formu
+![Ödeme Formu](docs/screenshots/payment-form.png)
 
 #### 📊 Kullanıcı Dashboard
 ![Dashboard](docs/screenshots/dashboard.png)
 
-#### 💳 Ödeme Formu
-![Ödeme Formu](docs/screenshots/payment-form.png)
+#### 👥 Sınıf Detay Sayfası
+![Sınıf Detay](docs/screenshots/ClassDetail.png)
 
 #### 🎥 Canlı Ders (Jitsi Meet)
 ![Canlı Ders](docs/screenshots/LiveLesson.png)
