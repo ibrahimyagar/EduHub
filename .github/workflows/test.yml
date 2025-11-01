@@ -1,11 +1,12 @@
 name: Test Pipeline
 
 on:
-  push:
-    branches: [ main, develop ]
-  pull_request:
-    branches: [ main, develop ]
-  workflow_dispatch:
+  # Şimdilik devre dışı - test projesi hazır olduğunda aktif edilecek
+  workflow_dispatch:  # Sadece manuel çalıştırma
+  # push:
+  #   branches: [ main, develop ]
+  # pull_request:
+  #   branches: [ main, develop ]
 
 env:
   DOTNET_VERSION: '8.0.x'
