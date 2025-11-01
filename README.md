@@ -36,6 +36,11 @@ EduHub, ASP.NET Core MVC 8.0 tabanlı modern bir sınıf yönetim sistemidir. Ö
 - ✅ **Rol Yönetimi**: Öğretmen ve öğrenci rolleri ile yetkilendirme
 
 ### İleri Seviye Özellikler
+- 🎥 **Canlı Ders Desteği**: Jitsi Meet entegrasyonu ile gerçek zamanlı video konferans
+- 💻 **Online Kod Editörü**: StackBlitz entegrasyonu ile tarayıcıda kod yazma ve çalıştırma
+- 💳 **Ödeme Sistemi**: iyzico entegrasyonu ile güvenli kurs satın alma
+- 📚 **Kurs Kataloğu**: Açık katılımlı kurs listesi ve detay sayfaları
+- ⭐ **Eğitmen Puanlama**: Şeffaf değerlendirme sistemi ile eğitmen kalitesi
 - 🔐 Email doğrulama ile hesap aktivasyonu
 - 📧 Şifre sıfırlama ve unutulan şifre yönetimi
 - 🔒 Yetkilendirme kontrolleri ile güvenli erişim
@@ -56,6 +61,11 @@ EduHub, ASP.NET Core MVC 8.0 tabanlı modern bir sınıf yönetim sistemidir. Ö
 - **Bootstrap 5**: CSS framework
 - **jQuery**: JavaScript kütüphanesi
 - **jQuery Validation**: Form validasyonu
+
+### Entegrasyonlar
+- **Jitsi Meet**: Canlı video konferans ve ders desteği
+- **StackBlitz**: Online kod editörü ve IDE
+- **iyzico**: Ödeme ve e-ticaret altyapısı
 
 ### Development Tools
 - **Entity Framework Tools**: Migration yönetimi
@@ -449,6 +459,15 @@ Katkılarınızı bekliyoruz! Lütfen [CONTRIBUTING.md](CONTRIBUTING.md) dosyas�
 3. Değişikliklerinizi commit edin (`git commit -m 'Add some AmazingFeature'`)
 4. Branch'inizi push edin (`git push origin feature/AmazingFeature`)
 5. Pull Request açın
+
+## 📄 Tez Dokümantasyonu
+
+Bu proje, Bandırma Onyedi Eylül Üniversitesi Bilgisayar Mühendisliği Bölümü Lisans Bitirme Projesi kapsamında geliştirilmiştir.
+
+**Tez Dokümanı**: [docs/THESIS.md](docs/THESIS.md)  
+**Tez Başlığı**: Canlı Ders Destekli ve Online Kod Editörü Gömülü Eğitim Platformu  
+**Danışman**: Doç. Dr. Mehmet Akif Çifçi  
+**Tarih**: 19/06/2025
 
 ## 📝 Lisans
 
