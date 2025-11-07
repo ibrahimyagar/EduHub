@@ -5,7 +5,7 @@
 [![SQL Server](https://img.shields.io/badge/SQL%20Server-2019-CC2927?logo=microsoft-sql-server)](https://www.microsoft.com/sql-server)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
-EduHub, ASP.NET Core MVC 8.0 tabanlı modern bir sınıf yönetim sistemidir. Öğretmenler ve öğrenciler için kapsamlı bir dijital sınıf ortamı sunar. Ödev yönetimi, duyuru paylaşımı, öğretmen değerlendirme sistemi ve dosya yükleme gibi özellikler içerir.
+EduHub, YouTube benzeri, eğitmen ve öğrencileri aynı platformda buluşturan kapsamlı bir online eğitim ve canlı ders deneyimi platformudur. Platform, eğitmenlerin içeriklerini ücretli veya ücretsiz yayınlamasını, öğrencilerin yorum ve puanlara göre eğitmen seçmesini ve kullanıcıların eş zamanlı olarak hem öğrenci hem eğitmen rolü üstlenmesini sağlar.
 
 ## 📸 Ekran Görüntüleri
 
@@ -67,6 +67,12 @@ EduHub, ASP.NET Core MVC 8.0 tabanlı modern bir sınıf yönetim sistemidir. Ö
 - ✅ **Dosya Yönetimi**: Ödev dosyaları için güvenli yükleme ve saklama
 - ✅ **Arşivleme**: Sınıfları arşivleme ve geri getirme özelliği
 - ✅ **Rol Yönetimi**: Öğretmen ve öğrenci rolleri ile yetkilendirme
+- ✅ **Esnek Fiyatlandırma**: Eğitimler ücretsiz başlayıp geri bildirimlere göre ücretliye dönebilir.
+- ✅ **Proje İndirme: Öğrenciler çalışmalarını VSCode gibi editörlerde açılacak biçimde indirebilir.
+
+
+
+
 
 ### İleri Seviye Özellikler
 - 🎥 **Canlı Ders Desteği**: Jitsi Meet entegrasyonu ile gerçek zamanlı video konferans
